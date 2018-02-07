@@ -13,11 +13,6 @@ class Main{
 
         //fps调试器
         Laya.Stat.show();
-
-        //调试面板
-        Laya.DebugPanel.init();
-        
-
     }
 }
 

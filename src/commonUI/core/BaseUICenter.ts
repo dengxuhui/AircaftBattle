@@ -35,12 +35,39 @@ class BaseUICenter{
         return this._managers.isExist(id);
     }
 
+    public getOpenParam(id:number):any{
+        var manager:BaseUIManager = this.getManager(id);
+        if(manager != null){
+            return manager.getOpenParam();
+        }
+        return null;
+    }
+
+    public isOpen(id:number):boolean{
+        var manager:BaseUIManager = this.getManager(id);
+        if(manager != null){
+            return manager.isOpened;
+        }
+        return true;
+    }
+
     public openUI(id:number):void{
         var manager:BaseUIManager = this.getManager(id);
         if(manager != null){
-            // manager.
+            manager.open(this.onUIinitCallBack);
         }        
     }    
+
+    public closeUI(id:number):void{
+        var manager:BaseUIManager = this.getManager(id);
+        if(manager != null){
+            manager.close();
+            var index:number = this._openingUI.indexOf(id);
+            if(index != -1){
+                this._openingUI.splice(index,1);
+            }
+        }
+    }
 
     private onUIinitCallBack(id:number):void{
         this._openingUI.push(id);
@@ -57,6 +84,11 @@ class BaseUICenter{
             }
             this._managers.dispose();
             this._managers = null;
+        }
+
+        if(this._openingUI != null){
+            this._openingUI.splice(0,this._openingUI.length);
+            this._openingUI = null;
         }
     }
 }

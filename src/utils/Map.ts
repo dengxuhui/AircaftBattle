@@ -68,7 +68,7 @@ class Map{
         return this._keys.length;
     }
 
-    public getKeyBy(index:number):any{
+    public getKey(index:number):any{
         if(index >= this._keys.length){
             return null;
         }
