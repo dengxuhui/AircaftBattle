@@ -2,9 +2,11 @@
 * name;
 */
 var ResData = /** @class */ (function () {
-    function ResData() {
+    function ResData(url, resType) {
         this.url = "";
         this.resType = "";
+        this.url = url;
+        this.resType = resType;
     }
     return ResData;
 }());

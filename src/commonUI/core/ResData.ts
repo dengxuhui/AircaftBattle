@@ -4,7 +4,9 @@
 class ResData{
     public url:string = "";
     public resType:string = "";
-    constructor(){
 
+    constructor(url:string,resType:string){
+        this.url = url;
+        this.resType = resType;
     }
 }

@@ -3,8 +3,6 @@
 */
 var BaseUICenter = /** @class */ (function () {
     function BaseUICenter() {
-        this._managers = null;
-        this._openingUI = null;
         this._managers = new Map();
         this._openingUI = new Array();
     }
@@ -59,7 +57,13 @@ var BaseUICenter = /** @class */ (function () {
         }
     };
     BaseUICenter.prototype.onUIinitCallBack = function (id) {
-        this._openingUI.push(id);
+        if (this._openingUI != null) {
+            this._openingUI.push(id);
+        }
+        else {
+            this._openingUI = new Array();
+            this._openingUI.push(id);
+        }
     };
     BaseUICenter.prototype.dispose = function () {
         if (this._managers != null) {

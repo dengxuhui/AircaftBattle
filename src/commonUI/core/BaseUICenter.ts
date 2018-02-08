@@ -4,12 +4,11 @@
 */
 class BaseUICenter{
 
-    protected _managers:Map = null;
-    protected _openingUI:Array<number> = null;
+    protected _managers:Map = new Map();
+    protected _openingUI:Array<number> = new Array();
 
     constructor(){
-        this._managers = new Map();
-        this._openingUI = new Array<number>();
+       
     }
 
     public addManager(id:number,className:any):void{
@@ -70,7 +69,13 @@ class BaseUICenter{
     }
 
     private onUIinitCallBack(id:number):void{
-        this._openingUI.push(id);
+        if(this._openingUI != null){
+            this._openingUI.push(id);
+        }else{            
+            this._openingUI = new Array();
+            this._openingUI.push(id);            
+        }
+        
     }
 
     public dispose():void{

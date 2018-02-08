@@ -164,7 +164,7 @@ var BaseUIManager = /** @class */ (function () {
         this._viewCenter.onShow();
         this._controlCenter.onShow();
         if (this._onInitedCallBack != null) {
-            this._onInitedCallBack(this.id);
+            this._onInitedCallBack.call(this._onInitedCallBack, this.id);
         }
     };
     BaseUIManager.prototype.doHide = function () {

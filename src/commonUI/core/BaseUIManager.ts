@@ -156,7 +156,7 @@ class BaseUIManager {
             for (var i: number = 0; i < this._resDatas.length; i++) {
                 var resData: ResData = this._resDatas[i];
                 if (resData != null) {
-                    Laya.loader.load(resData.url, laya.utils.Handler.create(this, this.loadComplete));
+                    Laya.loader.load(resData.url, laya.utils.Handler.create(this, this.loadComplete));                    
                 }
             }
         }
@@ -191,7 +191,7 @@ class BaseUIManager {
         this._controlCenter.onShow();
 
         if (this._onInitedCallBack != null) {
-            this._onInitedCallBack(this.id);
+            this._onInitedCallBack.call(this._onInitedCallBack,this.id);            
         }
     }
 

@@ -14,9 +14,11 @@ var __extends = (this && this.__extends) || (function () {
 var UICenter = /** @class */ (function (_super) {
     __extends(UICenter, _super);
     function UICenter() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this.addManager(UI.Main, commonUI.MainManager);
+        return _this;
     }
-    UICenter.instanc = function () {
+    UICenter.instance = function () {
         if (this._instance == null) {
             this._instance = new UICenter();
         }
