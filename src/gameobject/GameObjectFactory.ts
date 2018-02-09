@@ -30,6 +30,7 @@ module gameobject{
 				var className:any = this._gameObjDic.get(objType);
 				gameObj = new className();
 				gameObj.setData(data);
+				gameObj.gameObjType = objType;
 			}
 			else{
 				// gameObj.ca

@@ -10,6 +10,7 @@ module gameobject{
 		protected _isWaitForDispose:boolean = false;
 		protected _data:object = null;
 		protected _layerType:number = LAYER.MAIN;
+		protected _gameObjType:number = -1;
 
 		constructor(){
 			super();
@@ -20,15 +21,29 @@ module gameobject{
 		}
 
 		public initialize():void{
-			// addEventListener()
+			this.on(gameobject.GameObjectEvent.REQUEST_DISPOSE,this,this.onObjRequestDispose);
+			this.on(gameobject.GameObjectEvent.CANCEL_DISPOSE,this,this.onOjbCancelDispose);
 		}
 
 		public uninitialize():void{
+			this.off(gameobject.GameObjectEvent.REQUEST_DISPOSE,this,this.onObjRequestDispose);
+			this.off(gameobject.GameObjectEvent.CANCEL_DISPOSE,this,this.onOjbCancelDispose);
+		}
+
+		public onObjRequestDispose():void{
+
+		}
+
+		public onOjbCancelDispose():void{
 
 		}
 
 		public cancelDispose():void{
-			this.event(gameobject.GameObjectEvent.CANCEL_DISPOSE)
+			this.event(gameobject.GameObjectEvent.CANCEL_DISPOSE,{objType:this._gameObjType});
+		}
+
+		public dipatchDisposeEvent():void{
+			this.event(gameobject.GameObjectEvent.DISPOSE,{ojbType:this._gameObjType});
 		}
 
 		public dispose():void{
@@ -38,6 +53,22 @@ module gameobject{
 			if(!this._isWaitForDispose){
 				return;
 			}
+		}
+
+		public set isWaitForDispose(value:boolean){
+			this._isWaitForDispose = value;
+		}
+
+		public get isWaitForDispose():boolean{
+			return this._isWaitForDispose;
+		}
+
+		public get gameObjType():number{
+			return this._gameObjType;
+		}
+
+		public set gameObjType(value:number){
+			this._gameObjType = value;
 		}
 	}
 }

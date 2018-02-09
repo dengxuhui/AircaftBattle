@@ -11,16 +11,8 @@ module gameobject{
 
 		public static DISPOSE:string = "DISPOSE";		
 
-		private _objType:number;
-
-		constructor(type:string,objType:number){
-			super();
-			this.type = type;
-			this._objType = objType;
-		}
-
-		public get objType():number{
-			return this._objType;
+		constructor(){
+			super();					
 		}
 	}
 }
