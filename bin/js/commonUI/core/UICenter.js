@@ -16,6 +16,7 @@ var UICenter = /** @class */ (function (_super) {
     function UICenter() {
         var _this = _super.call(this) || this;
         _this.addManager(UI.Main, commonUI.MainManager);
+        _this.addManager(UI.GameScene, commonUI.GameSceneManager);
         return _this;
     }
     UICenter.instance = function () {

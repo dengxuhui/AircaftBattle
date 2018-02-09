@@ -6,11 +6,6 @@ var gameData;
     /**玩家信息 */
     var Master = /** @class */ (function () {
         function Master() {
-            this._dataMap = null;
-            this._dataMap = new Map();
-            this._dataMap.addValue(Master.MONEY, 0);
-            this._dataMap.addValue(Master.ENERGY, 0);
-            this._dataMap.addValue(Master.NAME, "null");
         }
         Master.instance = function () {
             if (this._instance == null) {
@@ -19,26 +14,42 @@ var gameData;
             return this._instance;
         };
         Master.prototype.getDataByType = function (type) {
-            if (this._dataMap == null) {
-                return null;
+            var localData = localStorage.getItem(Master.MASTER_STORAGE);
+            if (localData != undefined) {
+                var jsonData = JSON.parse(localData);
+                return jsonData[type];
             }
-            return this._dataMap.getValueByKey(type);
+            return null;
         };
         /**覆盖旧值，更新值 */
-        Master.prototype.updateDataByType = function (value, type) {
-            if (this._dataMap == null) {
-                return;
+        Master.prototype.updateDataByType = function (value, type, isCoverOldValue) {
+            if (isCoverOldValue === void 0) { isCoverOldValue = false; }
+            var localData = localStorage.getItem(Master.MASTER_STORAGE);
+            if (localData != undefined) {
+                var jsonData = JSON.parse(localData);
+                if (isCoverOldValue) {
+                    jsonData[type] = value;
+                }
+                else {
+                    if (typeof value == "number") {
+                        var oldValue = jsonData[type];
+                        var newValue = oldValue + value;
+                        jsonData[type] = newValue;
+                    }
+                }
+                var jsonStr = JSON.stringify(jsonData);
+                localStorage.setItem(Master.MASTER_STORAGE, jsonStr);
             }
-            this._dataMap.addValue(type, value);
-            //更新配置文件
-            var objData = Laya.loader.getRes(Master.CONF_PATH);
-            objData[type] = value;
         };
+        /**利用localstorage存储 */
         Master.prototype.initData = function (data) {
-            this._dataMap.addValue(Master.MONEY, data["money"]);
-            this._dataMap.addValue(Master.ENERGY, data["energy"]);
-            this._dataMap.addValue(Master.NAME, data["name"]);
+            var localData = localStorage.getItem(Master.MASTER_STORAGE);
+            if (localData == undefined) {
+                var jsonStr = JSON.stringify(data);
+                localStorage.setItem(Master.MASTER_STORAGE, jsonStr);
+            }
         };
+        Master.MASTER_STORAGE = "master_data";
         Master.CONF_PATH = "res/config/master.json";
         Master.MONEY = "money";
         Master.ENERGY = "energy";

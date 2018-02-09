@@ -1,0 +1,1 @@
+{"frames":{"progress_enemy_hp$bar.png":{"frame":{"h":11,"idx":0,"w":190,"x":0,"y":0},"sourceSize":{"h":11,"w":190},"spriteSourceSize":{"x":0,"y":0}},"progress_enemy_hp.png":{"frame":{"h":7,"idx":0,"w":171,"x":0,"y":12},"sourceSize":{"h":7,"w":171},"spriteSourceSize":{"x":0,"y":0}}},"meta":{"image":"gameScene.png","prefix":"gameScene/"}}

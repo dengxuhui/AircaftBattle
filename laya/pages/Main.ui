@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":8,
+    "selecteID":13,
     "props":{"width":480,"sceneColor":"#ffffff","height":800},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"skin":"main/img_main_bg.jpg"},
+            "props":{"y":0,"x":0,"skin":"public/img_main_bg.jpg"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -24,85 +24,44 @@
             "compId":2,
             "child":[
                 ],
-            "$LOCKED":true
+            "$LOCKED":false
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":36,"x":51,"width":160,"skin":"public/img_black.png","height":40},
+            "type":"Animation",
+            "props":{"y":338,"x":216,"var":"aniShowAircarft","source":"ShowAircrftFly.ani"},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Animation(aniShowAircarft)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":3,
-            "child":[
-                ],
-            "$LOCKED":true
-        },
-        {
-            "x":15,
-            "type":"Image",
-            "props":{"y":36,"x":286,"width":160,"skin":"public/img_black.png","height":40},
-            "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":4,
-            "child":[
-                ],
-            "$LOCKED":true
-        },
-        {
-            "x":15,
-            "type":"Image",
-            "props":{"y":40,"x":53,"skin":"main/img_money_big.png"},
-            "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":5,
+            "compId":9,
             "child":[
                 ]
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":41,"x":291,"skin":"main/img_energy_big.png"},
+            "props":{"y":0,"x":15,"skin":"main/img_main_logo.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":6,
+            "compId":10,
             "child":[
                 ]
         },
         {
             "x":15,
-            "type":"Label",
-            "props":{"y":45,"x":99,"width":100,"var":"tfNumMoney","text":"label","styleSkin":"comp/label.png","height":30,"fontSize":20,"color":"#ffffff","align":"center"},
+            "type":"Button",
+            "props":{"y":522,"x":143,"var":"btnStart","stateNum":"1","skin":"main/btn_main_Btn_pressed8.png"},
             "nodeParent":1,
-            "label":"Label(tfNumMoney)",
+            "label":"Button(btnStart)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":7,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Label",
-            "props":{"y":45,"x":337,"width":100,"var":"tfNumEnergy","text":"label","styleSkin":"comp/label.png","height":30,"fontSize":20,"color":"#ffffff","align":"center"},
-            "nodeParent":1,
-            "label":"Label(tfNumEnergy)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":8,
+            "compId":13,
             "child":[
                 ]
         }],

@@ -1,0 +1,39 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+/**
+* name
+*/
+var gameobject;
+(function (gameobject) {
+    var Event = laya.events.Event;
+    var GameObjectEvent = /** @class */ (function (_super) {
+        __extends(GameObjectEvent, _super);
+        function GameObjectEvent(type, objType) {
+            var _this = _super.call(this) || this;
+            _this.type = type;
+            _this._objType = objType;
+            return _this;
+        }
+        Object.defineProperty(GameObjectEvent.prototype, "objType", {
+            get: function () {
+                return this._objType;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        GameObjectEvent.REQUEST_DISPOSE = "REQUEST_DISPOSE";
+        GameObjectEvent.CANCEL_DISPOSE = "CANCEL_DISPOSE";
+        GameObjectEvent.DISPOSE = "DISPOSE";
+        return GameObjectEvent;
+    }(Event));
+    gameobject.GameObjectEvent = GameObjectEvent;
+})(gameobject || (gameobject = {}));
+//# sourceMappingURL=GameObjectEvent.js.map

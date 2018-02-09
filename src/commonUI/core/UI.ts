@@ -1,3 +1,4 @@
 enum UI{
-    Main
+    Main,
+    GameScene
 }

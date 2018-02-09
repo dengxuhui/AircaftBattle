@@ -8,6 +8,7 @@ class UICenter extends BaseUICenter{
         super();
         
         this.addManager(UI.Main,commonUI.MainManager);
+        this.addManager(UI.GameScene,commonUI.GameSceneManager);
     }
 
     public static instance():UICenter{

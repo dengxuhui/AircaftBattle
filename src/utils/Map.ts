@@ -1,6 +1,6 @@
 import Dictionary = laya.utils.Dictionary;
 /*
-* name;
+* map数据结构  使用更加方便  但是不适合大数据存储  会消耗大量内存
 */
 class Map{
 
