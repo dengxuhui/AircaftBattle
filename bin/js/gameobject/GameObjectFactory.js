@@ -17,11 +17,16 @@ var gameobject;
         __extends(GameObjectFactory, _super);
         function GameObjectFactory() {
             var _this = _super.call(this) || this;
-            _this._gameObjDic = null;
-            _this._objectPoolMap = null;
-            _this._objectPoolMap = new Map();
-            _this._gameObjDic = new Dictionary();
-            _this._gameObjDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
+            _this._objClassDic = null;
+            /**一级缓存用于缓存只被用了一次的资源 */
+            _this._objectFirstPoolMap = null;
+            /**二级缓存用于缓存经常使用的资源，从资源池拿去先从当前资源池拿取 */
+            _this._objectSecondPoolMap = null;
+            _this._curCacheObjNum = 0;
+            _this._objectFirstPoolMap = new Map();
+            _this._objectSecondPoolMap = new Map();
+            _this._objClassDic = new Dictionary();
+            _this._objClassDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
             return _this;
         }
         GameObjectFactory.instance = function () {
@@ -35,29 +40,97 @@ var gameobject;
             var gameObj = null;
             gameObj = this.findObjInPool(objType);
             if (gameObj == null) {
-                var className = this._gameObjDic.get(objType);
+                var className = this._objClassDic.get(objType);
                 gameObj = new className();
                 gameObj.setData(data);
+                gameObj.gameObjType = objType;
             }
             else {
-                // gameObj.ca
                 gameObj.setData(data);
             }
             return gameObj;
+        };
+        GameObjectFactory.prototype.disposeObj = function (obj, objType) {
+            if (obj == null || objType < 0) {
+                return;
+            }
+            obj.isWaitForDispose = true;
+            if (obj.refCount > 0) {
+                var secondObjAry = this._objectSecondPoolMap.getValueByKey(objType);
+                if (secondObjAry == null) {
+                    console.assert(false, "野资源");
+                }
+                secondObjAry.push(obj);
+            }
+            else {
+                var firstObjAry = this._objectFirstPoolMap.getValueByKey(objType);
+                if (firstObjAry == null) {
+                    firstObjAry = new Array();
+                    this._objectFirstPoolMap.addValue(objType, firstObjAry);
+                }
+                firstObjAry.push(obj);
+            }
+            this._curCacheObjNum += 1;
+            if (this._curCacheObjNum >= GameObjectFactory.MAX_CACHE_NUM) {
+                this.cleanCachePool();
+            }
+        };
+        /*清理资源池 清理所有一级缓存* */
+        GameObjectFactory.prototype.cleanCachePool = function () {
+            var i = 0;
+            for (i = 0; i < this._objectFirstPoolMap.length; i++) {
+                var objAry = this._objectFirstPoolMap.getValueByIndex(i);
+                if (objAry == null) {
+                    console.assert(false, "数组为空");
+                    continue;
+                }
+                if (objAry.length <= 0) {
+                    continue;
+                }
+                for (var j = 0; j < objAry.length; j++) {
+                    var obj = objAry[j];
+                    if (obj == null) {
+                        continue;
+                    }
+                    obj.dispose();
+                    obj = null;
+                    this._curCacheObjNum -= 1;
+                }
+                objAry.splice(0, objAry.length);
+            }
+            if (this._curCacheObjNum >= GameObjectFactory.MAX_CACHE_NUM) {
+                this.deepCleanCachePool();
+            }
+        };
+        /**深度清理二级缓存 一般是不存在这种情况*/
+        GameObjectFactory.prototype.deepCleanCachePool = function () {
         };
         GameObjectFactory.prototype.findObjInPool = function (objType) {
             var gameObj = null;
-            var gameObjAry = this._objectPoolMap.getValueByKey(objType);
-            if (gameObjAry == null || gameObjAry.length <= 0) {
+            var gameFirstObjAry = this._objectFirstPoolMap.getValueByKey(objType);
+            var gameSecondObjAry = this._objectSecondPoolMap.getValueByKey(objType);
+            if ((gameSecondObjAry == null || gameSecondObjAry.length <= 0) && (gameFirstObjAry == null || gameFirstObjAry.length <= 0)) {
                 return null;
             }
-            gameObj = gameObjAry.shift();
+            if (gameSecondObjAry.length > 0) {
+                gameObj = gameSecondObjAry.shift();
+            }
+            else {
+                gameObj = gameFirstObjAry.shift();
+            }
+            if (gameObj == null) {
+                return null;
+            }
+            gameObj.isWaitForDispose = false;
+            gameObj.refCount += 1;
+            this._curCacheObjNum -= 1;
             return gameObj;
         };
         GameObjectFactory.prototype.dispose = function () {
-            this._gameObjDic = null;
+            this._objClassDic = null;
         };
         GameObjectFactory._instance = null;
+        GameObjectFactory.MAX_CACHE_NUM = 1000;
         return GameObjectFactory;
     }(laya.events.EventDispatcher));
     gameobject.GameObjectFactory = GameObjectFactory;

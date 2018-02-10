@@ -16,16 +16,9 @@ var gameobject;
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
         function Bullet() {
-            var _this = _super.call(this) || this;
-            _this.on(gameobject.GameObjectEvent.CANCEL_DISPOSE, _this, _this.onCancelDispose);
-            return _this;
+            return _super.call(this) || this;
         }
-        Bullet.prototype.onCancelDispose = function (e, d) {
-            var a = 0;
-            if (a == 0) {
-                console.log(e);
-            }
-            console.log("right");
+        Bullet.prototype.setData = function (data) {
         };
         return Bullet;
     }(gameobject.GameObject));

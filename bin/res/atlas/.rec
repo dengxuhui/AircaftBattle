@@ -33,6 +33,10 @@ P B9680947 vscroll$up.png
 P 7E990267 vscroll.png
 P E466EB1C vslider$bar.png
 P 2BFF7046 vslider.png
+D gameObject
+P 9BC5F6CF img_bullet_type_0_level_0.png
+P BD9EFA46 img_bullet_type_0_level_1.png
+P 3EA0D88A img_bullet_type_0_level_2.png
 D gameScene
 R 641363E0 img_systemimg.png
 P AD14F213 progress_enemy_hp$bar.png

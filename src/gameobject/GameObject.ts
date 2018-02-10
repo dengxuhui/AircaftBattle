@@ -11,6 +11,8 @@ module gameobject{
 		protected _data:object = null;
 		protected _layerType:number = LAYER.MAIN;
 		protected _gameObjType:number = -1;
+		/**引用计数 */
+		protected _refCount:number = 0;
 
 		constructor(){
 			super();
@@ -47,12 +49,7 @@ module gameobject{
 		}
 
 		public dispose():void{
-			if(this.parent != null){
-				this.parent.removeChild(this);
-			}
-			if(!this._isWaitForDispose){
-				return;
-			}
+			
 		}
 
 		public set isWaitForDispose(value:boolean){
@@ -69,6 +66,14 @@ module gameobject{
 
 		public set gameObjType(value:number){
 			this._gameObjType = value;
+		}
+
+		public get refCount():number{
+			return this._refCount;
+		}
+
+		public set refCount(value:number){
+			this._refCount = value;
 		}
 	}
 }

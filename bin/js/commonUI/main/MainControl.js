@@ -25,8 +25,6 @@ var commonUI;
             }
             view.btnStart.clickHandler = laya.utils.Handler.create(this, this.onClickStart);
             view.aniShowAircarft.play(0, true);
-            var obj = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET);
-            obj.event(gameobject.GameObjectEvent.CANCEL_DISPOSE, ["hahah", "ddd"]);
         };
         MainControl.prototype.onClickStart = function (e) {
             UICenter.instance().closeUI(UI.Main);
