@@ -9,6 +9,7 @@ var GAMEOJB_TYPE;
 (function (GAMEOJB_TYPE) {
     /**子弹 */
     GAMEOJB_TYPE[GAMEOJB_TYPE["BULLET"] = 0] = "BULLET";
+    GAMEOJB_TYPE[GAMEOJB_TYPE["PANEL"] = 1] = "PANEL";
 })(GAMEOJB_TYPE || (GAMEOJB_TYPE = {}));
 /**子弹类型 */
 var GAMEOBJECT_BULLET;
@@ -24,4 +25,16 @@ var X_RAY;
     X_RAY[X_RAY["LEVE_1"] = 1] = "LEVE_1";
     X_RAY[X_RAY["LEVE_2"] = 2] = "LEVE_2";
 })(X_RAY || (X_RAY = {}));
+/**方向 */
+var DIRECTION;
+(function (DIRECTION) {
+    DIRECTION[DIRECTION["UP"] = 0] = "UP";
+    DIRECTION[DIRECTION["DOWN"] = 1] = "DOWN";
+    DIRECTION[DIRECTION["RIGHT"] = 2] = "RIGHT";
+    DIRECTION[DIRECTION["LEFT"] = 3] = "LEFT";
+    DIRECTION[DIRECTION["UP_RIGHT"] = 4] = "UP_RIGHT";
+    DIRECTION[DIRECTION["UP_LEFT"] = 5] = "UP_LEFT";
+    DIRECTION[DIRECTION["DOWN_RIGHT"] = 6] = "DOWN_RIGHT";
+    DIRECTION[DIRECTION["DOWN_LEFT"] = 7] = "DOWN_LEFT";
+})(DIRECTION || (DIRECTION = {}));
 //# sourceMappingURL=GlobConst.js.map

@@ -21,8 +21,12 @@ class Main {
             laya.utils.Handler.create(null, this.onLoadComplete));
     }
 
-    private onLoadComplete(): void {
-        console.log("load complete");                       
+    private onLoadComplete(): void {    
+        
+        if(laya.utils.Browser.onPC == false && laya.utils.Browser.onMobile == false){
+            console.assert(false,"不支持当前平台");
+            return;
+        }              
         gameData.Master.instance().initData(Laya.loader.getRes("res/config/master.json"));      
 
         gameData.Master.instance().updateDataByType(100,gameData.Master.MONEY);

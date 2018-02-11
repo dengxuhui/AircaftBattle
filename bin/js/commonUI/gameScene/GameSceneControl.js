@@ -24,15 +24,11 @@ var commonUI;
             if (uiData != null && view != null) {
                 view.progressCurEnemyHp.visible = uiData.curEnemy != null;
             }
-            this.addBullet();
-        };
-        GameSceneControl.prototype.addBullet = function () {
-            var url = Laya.Loader.getAtlas("res/atlas/comp.atlas");
-            console.log(url);
-            // var bulletData:object = {};
-            // var bullet:gameobject.Bullet = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET);
+            //改逻辑应由一个状态栈所控制，这里为了简化 直接通过UI控制战斗逻辑入口开始及初始化
+            manager.BattleLogicManager.instance().inintBattleLoagic();
         };
         GameSceneControl.prototype.onHide = function () {
+            manager.BattleLogicManager.instance().uninitBattleLogic();
         };
         return GameSceneControl;
     }(BaseUIControl));

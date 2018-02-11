@@ -33,22 +33,8 @@ var gameobject;
             this._data = data;
         };
         GameObject.prototype.initialize = function () {
-            this.on(gameobject.GameObjectEvent.REQUEST_DISPOSE, this, this.onObjRequestDispose);
-            this.on(gameobject.GameObjectEvent.CANCEL_DISPOSE, this, this.onOjbCancelDispose);
         };
         GameObject.prototype.uninitialize = function () {
-            this.off(gameobject.GameObjectEvent.REQUEST_DISPOSE, this, this.onObjRequestDispose);
-            this.off(gameobject.GameObjectEvent.CANCEL_DISPOSE, this, this.onOjbCancelDispose);
-        };
-        GameObject.prototype.onObjRequestDispose = function () {
-        };
-        GameObject.prototype.onOjbCancelDispose = function () {
-        };
-        GameObject.prototype.cancelDispose = function () {
-            this.event(gameobject.GameObjectEvent.CANCEL_DISPOSE, { objType: this._gameObjType });
-        };
-        GameObject.prototype.dipatchDisposeEvent = function () {
-            this.event(gameobject.GameObjectEvent.DISPOSE, { ojbType: this._gameObjType });
         };
         GameObject.prototype.dispose = function () {
         };

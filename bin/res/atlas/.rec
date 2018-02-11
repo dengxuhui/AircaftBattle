@@ -1,4 +1,10 @@
 D .
+D boss1
+P 068603BF boss1_0.png
+P 6228FC88 boss1_1.png
+P F4A5B286 boss1_2.png
+P 98E96ADF boss1_3.png
+P 03F7F53E boss1_4.png
 D comp
 P D12221A9 bg.png
 P 9401CC40 blank.png

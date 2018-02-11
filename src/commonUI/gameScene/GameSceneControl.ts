@@ -13,23 +13,13 @@ module commonUI{
 			if(uiData != null && view != null){
 				view.progressCurEnemyHp.visible = uiData.curEnemy != null;
 			}
-			this.loadGameRes();
-		}
-		
-		private loadGameRes():void{
-			
-		}
 
-		private addBullet():void{
-			var url = Laya.Loader.getAtlas("res/atlas/comp.atlas");
-			console.log(url);
-			var bulletData:object = {};
-			
-			// var bullet:gameobject.Bullet = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET);
+			//改逻辑应由一个状态栈所控制，这里为了简化 直接通过UI控制战斗逻辑入口开始及初始化
+			manager.BattleLogicManager.instance().inintBattleLoagic();
 		}
 
 		public onHide():void{
-
+			manager.BattleLogicManager.instance().uninitBattleLogic();
 		}
 	}
 }

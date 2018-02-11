@@ -23,29 +23,11 @@ module gameobject{
 		}
 
 		public initialize():void{
-			this.on(gameobject.GameObjectEvent.REQUEST_DISPOSE,this,this.onObjRequestDispose);
-			this.on(gameobject.GameObjectEvent.CANCEL_DISPOSE,this,this.onOjbCancelDispose);
+		
 		}
 
 		public uninitialize():void{
-			this.off(gameobject.GameObjectEvent.REQUEST_DISPOSE,this,this.onObjRequestDispose);
-			this.off(gameobject.GameObjectEvent.CANCEL_DISPOSE,this,this.onOjbCancelDispose);
-		}
-
-		public onObjRequestDispose():void{
-
-		}
-
-		public onOjbCancelDispose():void{
-
-		}
-
-		public cancelDispose():void{
-			this.event(gameobject.GameObjectEvent.CANCEL_DISPOSE,{objType:this._gameObjType});
-		}
-
-		public dipatchDisposeEvent():void{
-			this.event(gameobject.GameObjectEvent.DISPOSE,{ojbType:this._gameObjType});
+		
 		}
 
 		public dispose():void{

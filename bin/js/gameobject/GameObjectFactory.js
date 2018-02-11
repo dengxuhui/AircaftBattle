@@ -27,6 +27,7 @@ var gameobject;
             _this._objectSecondPoolMap = new Map();
             _this._objClassDic = new Dictionary();
             _this._objClassDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
+            _this._objClassDic.set(GAMEOJB_TYPE.PANEL, gameobject.AircarftPanel);
             return _this;
         }
         GameObjectFactory.instance = function () {

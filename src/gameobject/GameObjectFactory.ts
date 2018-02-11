@@ -19,6 +19,7 @@ module gameobject {
 			this._objectSecondPoolMap = new Map();
 			this._objClassDic = new Dictionary();
 			this._objClassDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
+			this._objClassDic.set(GAMEOJB_TYPE.PANEL,gameobject.AircarftPanel);
 		}
 
 		public static instance(): GameObjectFactory {
