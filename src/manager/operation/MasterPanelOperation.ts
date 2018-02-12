@@ -6,5 +6,13 @@ module operation{
 		constructor(){
 			super();
 		}
+
+		public register(soure:gameobject.GameObject):void{
+
+		}
+
+		public unregister():void{
+
+		}
 	}
 }

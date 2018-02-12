@@ -10,6 +10,7 @@ module manager{
 		private _registerNum:number = 0;
 		constructor(){			
 			this._operationClsDiC.set(OPERATION_TYPE.MASTER_PANEL,operation.MasterPanelOperation);
+			this._operationClsDiC.set(OPERATION_TYPE.ENEMY_PANEL,operation.EnemyPanelOperation);
 		}
 
 		public static get Instance():OperationManager{
@@ -21,13 +22,31 @@ module manager{
 
 		/**注册返回ID 用于反注册使用 */
 		public registerOperation(source:gameobject.GameObject,operationType:number):number | null{
-			var cls = this._operationClsDiC.get(operationType);
-			
+			var cls;
+			if(this._operationClsDiC.indexOf(operationType) == -1){
+				return null;
+			}
+			else{
+				cls = this._operationClsDiC.get(operationType);
+			}
+			var registerOperation:operation.BaseOperation = new cls(source);
+			registerOperation.register(source);
+			this._registerNum ++;
+			this._registeringDic.set(this._registerNum,registerOperation);			
 			return this._registerNum;
 		}
 
 		public unregisterOperation(registerID:number):void{
+			if(this._registeringDic.indexOf(registerID) == -1){
+				return;
+			}
+			var register:operation.BaseOperation = this._registeringDic.get(registerID);
+			if(register != null){
+				register.unregister();
+				register = null;
 
+				this._registeringDic.remove(registerID);
+			}			
 		}
 	}
 }

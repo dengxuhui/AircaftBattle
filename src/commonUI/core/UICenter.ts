@@ -17,4 +17,13 @@ class UICenter extends BaseUICenter{
         }
         return this._instance;
     }
+
+    public addManager(id:number,className:any):void{
+        if(className == null){
+            return;
+        }
+        var manager:BaseUIManager = new className();
+        manager.id = id;            
+        this._managers.addValue(id,manager);
+    }
 }

@@ -10,20 +10,13 @@ module gameobject{
 		private _curDir:number = DIRECTION.UP;
 		private _attrID:number = -1;
 		private _typeID:number = -1;
+		private _operationID:number = -1;
+
 
 		constructor(){
 			super();
 			this._render = new Sprite();							
-			this.addChild(this._render);
-			if(laya.utils.Browser.onPC){
-				this._render.on(Laya.Event.MOUSE_MOVE,this,this.onMouseMove);
-			}
-			this._render.on(Laya.Event.MOUSE_DOWN,this,this.onMouseMove);
-		}
-
-		private onMouseMove(arg:any):void{
-			console.log(arg);
-			console.log("dd");
+			this.addChild(this._render);	
 		}
 
 		public setData(data:any):void{
@@ -41,6 +34,13 @@ module gameobject{
 			else{
 				this.setRenderTexture(tex);
 			}
+
+			if(this._isSelf){
+				this._operationID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.MASTER_PANEL);
+			}
+			else{
+				this._operationID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
+			}
 		}
 
 		private onLoadAtlasComplete():void{
@@ -56,37 +56,8 @@ module gameobject{
 			this._render.graphics.drawTexture(texture);
 		}
 
-		/**改变方向 */
-		public changeDir(dir:number):void{
-
-			this.changeSkin(dir);
-			//最后赋值
-			this._curDir = dir;
-		}
-
-		/**更改皮肤 */
-		private changeSkin(dir:number):void{
-			if(this._curDir == dir){
-				return;
-			}
-			switch(dir){
-				case DIRECTION.UP:{
-
-				}
-				case DIRECTION.DOWN:{
-
-				}
-				case DIRECTION.LEFT:{
-
-				}
-				case DIRECTION.RIGHT:{
-
-				}
-			}
-		}
-
-		public get curDir():number{
-			return this._curDir;
+		public dispose():void{
+			manager.OperationManager.Instance.unregisterOperation(this._operationID);
 		}
 	}
 }
