@@ -10,6 +10,7 @@ module manager{
 		constructor(){
 			this._layerMap = new Map();
 			this._layerMap.addValue(LAYER.MAIN,new Sprite());
+			this._layerMap.addValue(LAYER.BATTLE,new Sprite());
 			this._layerMap.addValue(LAYER.ACTIVITY,new Sprite());
 			this._layerMap.addValue(LAYER.POP,new Sprite());
 

@@ -31,7 +31,7 @@ var gameobject;
             console.log(arg);
         };
         AircarftPanel.prototype.setData = function (data) {
-            // this._isSelf = data["isSelf"];	
+            this._isSelf = data["isSelf"];
             var skinAry = Laya.Loader.getAtlas("res/atlas/comp.atlas");
             var tex = Laya.Loader.getRes(skinAry[4]);
             this._render.graphics.drawTexture(tex);

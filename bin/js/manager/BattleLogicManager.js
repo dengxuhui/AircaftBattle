@@ -26,9 +26,9 @@ var manager;
         };
         BattleLogicManager.prototype.inintBattleLoagic = function () {
             var panel = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.PANEL);
-            panel.x = (Laya.stage.width - panel.width) / 2;
-            panel.y = (Laya.stage.height - panel.height);
-            manager.LayerManager.instance().addToLayer(panel, LAYER.ACTIVITY);
+            panel.x = panel.getBounds().width / 2;
+            panel.y = panel.getBounds().height / 2;
+            manager.LayerManager.instance().addToLayer(panel, LAYER.BATTLE);
         };
         BattleLogicManager.prototype.uninitBattleLogic = function () {
         };

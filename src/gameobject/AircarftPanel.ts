@@ -8,7 +8,7 @@ module gameobject{
 		private _curDir:number = DIRECTION.UP;
 		constructor(){
 			super();
-			this._render = new Sprite();
+			this._render = new Sprite();			
 			this.addChild(this._render);
 			if(laya.utils.Browser.onPC){
 				this.on(Laya.Event.MOUSE_MOVE,this,this.onMouseMove);
@@ -20,11 +20,11 @@ module gameobject{
 		}
 
 		public setData(data:any):void{
-			// this._isSelf = data["isSelf"];	
+			this._isSelf = data["isSelf"];	
 
 			var skinAry = Laya.Loader.getAtlas("res/atlas/comp.atlas");
 			var tex:any = Laya.Loader.getRes(skinAry[4]);
-			this._render.graphics.drawTexture(tex);
+			this._render.graphics.drawTexture(tex);								
 		}
 
 		/**改变方向 */

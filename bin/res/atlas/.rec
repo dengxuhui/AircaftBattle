@@ -1,4 +1,43 @@
 D .
+D aircraftPanel
+P 75290675 enemy0.png
+P 01F02DF4 enemy1.png
+P 8E2A2186 enemy11.png
+P 94C35DC8 enemy12.png
+P 283C4DED enemy13.png
+P F065E012 enemy13_0.png
+P 9785BF13 enemy13_1.png
+P 4547326F enemy14.png
+P 75843294 enemy15.png
+P 8B8FFA4C enemy16.png
+P 39855722 enemy18.png
+P 5EF5BBE1 enemy19.png
+P 21A21D58 enemy19_1.png
+P 6A2FB2E6 enemy2.png
+P A0BA428A enemy21.png
+P 75DF3940 enemy22.png
+P 1D20D52F enemy23.png
+P 32192FBA enemy24.png
+P 78022899 enemy25.png
+P E157E42F enemy3.png
+P 026FD495 enemy4.png
+P E93B7176 enemy5.png
+P FCEE4FCB enemy6.png
+P AD08524B enemy7.png
+P 4B1EA625 enemy8.png
+P 1360D4B7 enemy9.png
+P 139D2420 enemy_other_0.png
+P EACC3B6E enemy_other_1.png
+P AD060A5C enemy_other_2.png
+P 1BF8F0E2 enemy_other_3.png
+P B592A50E enemy_other_4.png
+P 04307397 enemy_other_5.png
+P 3BEA0A6B enemy_other_6.png
+P A1A82A93 enemy_other_7.png
+P DE664182 gra_planeImg0.png
+P A04FC537 gra_planeImg1.png
+P C830FED0 gra_planeImg2.png
+P 9E5B851E gra_planeImg3.png
 D boss1
 P 068603BF boss1_0.png
 P 6228FC88 boss1_1.png
@@ -39,10 +78,6 @@ P B9680947 vscroll$up.png
 P 7E990267 vscroll.png
 P E466EB1C vslider$bar.png
 P 2BFF7046 vslider.png
-D gameObject
-P 9BC5F6CF img_bullet_type_0_level_0.png
-P BD9EFA46 img_bullet_type_0_level_1.png
-P 3EA0D88A img_bullet_type_0_level_2.png
 D gameScene
 R 641363E0 img_systemimg.png
 P AD14F213 progress_enemy_hp$bar.png

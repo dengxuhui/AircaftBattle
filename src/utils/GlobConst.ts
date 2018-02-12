@@ -1,5 +1,6 @@
 enum LAYER{
     MAIN,
+    BATTLE,
     ACTIVITY,
     POP
 }

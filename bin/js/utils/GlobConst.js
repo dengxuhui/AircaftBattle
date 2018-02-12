@@ -1,8 +1,9 @@
 var LAYER;
 (function (LAYER) {
     LAYER[LAYER["MAIN"] = 0] = "MAIN";
-    LAYER[LAYER["ACTIVITY"] = 1] = "ACTIVITY";
-    LAYER[LAYER["POP"] = 2] = "POP";
+    LAYER[LAYER["BATTLE"] = 1] = "BATTLE";
+    LAYER[LAYER["ACTIVITY"] = 2] = "ACTIVITY";
+    LAYER[LAYER["POP"] = 3] = "POP";
 })(LAYER || (LAYER = {}));
 /**游戏物体类型 */
 var GAMEOJB_TYPE;
