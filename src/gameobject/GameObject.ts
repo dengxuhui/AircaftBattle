@@ -7,12 +7,13 @@ module gameobject{
 		/**是否是自己 如果不是自己飞行方向会反向 */
 		protected _isSelf:boolean = false;				
 		protected _canCache:boolean = false;
-		protected _isWaitForDispose:boolean = false;
+		
 		protected _data:object = null;
 		protected _layerType:number = LAYER.MAIN;
 		protected _gameObjType:number = -1;
 		/**引用计数 */
-		protected _refCount:number = 0;
+		private _refCount:number = 0;
+		private _isWaitForDispose:boolean = false;
 
 		constructor(){
 			super();

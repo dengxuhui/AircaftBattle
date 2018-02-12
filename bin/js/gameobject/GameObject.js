@@ -21,12 +21,12 @@ var gameobject;
             /**是否是自己 如果不是自己飞行方向会反向 */
             _this._isSelf = false;
             _this._canCache = false;
-            _this._isWaitForDispose = false;
             _this._data = null;
             _this._layerType = LAYER.MAIN;
             _this._gameObjType = -1;
             /**引用计数 */
             _this._refCount = 0;
+            _this._isWaitForDispose = false;
             return _this;
         }
         GameObject.prototype.setData = function (data) {

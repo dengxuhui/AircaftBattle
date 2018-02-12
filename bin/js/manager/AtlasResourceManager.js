@@ -21,15 +21,49 @@ var manager;
         /**加载图集 */
         AtlasResourceManager.prototype.loadAtlas = function (url, onComplete) {
             if (onComplete === void 0) { onComplete = null; }
-            var atlasName = url.match("/:([^/]+?)./")[0];
-            Laya.loader.load(url, laya.utils.Handler.create(this, this.onLoadComplete, [onComplete]), null, Laya.Loader.ATLAS);
+            //TODO 更改为正则表达式			
+            var atlasNameAry = url.split(".")[0].split("/");
+            var atlasName = atlasNameAry[atlasNameAry.length - 1];
+            if (this._curLoadAtlasDic.indexOf(atlasName) == -1) {
+                Laya.loader.load(url, laya.utils.Handler.create(this, this.onLoadComplete, [onComplete, atlasName]), null, Laya.Loader.ATLAS);
+            }
+            else {
+                if (onComplete != null) {
+                    onComplete.run();
+                }
+            }
         };
-        AtlasResourceManager.prototype.onLoadComplete = function (callBack) {
+        AtlasResourceManager.prototype.tryGetTexture = function (atlasName, attrName, attrID, typeID) {
+            var tex = null;
+            if (this._curLoadAtlasDic.indexOf(atlasName) == -1) {
+                console.log("请先加载：" + atlasName + "资源");
+                return null;
+            }
+            var urlAry = Laya.Loader.getAtlas("res/atlas/" + atlasName + ".atlas");
+            if (urlAry.length <= 0) {
+                console.assert(false, "图集url输入错误");
+                return null;
+            }
+            var texUrl = attrName + "_" + attrID + "_" + "type_" + typeID;
+            for (var i = 0; i < urlAry.length; i++) {
+                var url = urlAry[i];
+                if (url.indexOf(texUrl) != -1) {
+                    tex = Laya.Loader.getRes(url);
+                    break;
+                }
+            }
+            return tex;
+        };
+        AtlasResourceManager.prototype.onLoadComplete = function (callBack, atlasName) {
+            if (this._curLoadAtlasDic != null) {
+                this._curLoadAtlasDic.set(atlasName, atlasName);
+            }
             if (callBack != null) {
-                callBack.caller();
+                callBack.run();
             }
         };
         AtlasResourceManager._instance = null;
+        AtlasResourceManager.AIRCRAFT_PANEL = "aircraftPanel";
         return AtlasResourceManager;
     }());
     manager.AtlasResourceManager = AtlasResourceManager;

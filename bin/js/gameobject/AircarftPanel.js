@@ -20,21 +20,42 @@ var gameobject;
             var _this = _super.call(this) || this;
             _this._render = null;
             _this._curDir = DIRECTION.UP;
+            _this._attrID = -1;
+            _this._typeID = -1;
             _this._render = new Sprite();
             _this.addChild(_this._render);
             if (laya.utils.Browser.onPC) {
-                _this.on(Laya.Event.MOUSE_MOVE, _this, _this.onMouseMove);
+                _this._render.on(Laya.Event.MOUSE_MOVE, _this, _this.onMouseMove);
             }
+            _this._render.on(Laya.Event.MOUSE_DOWN, _this, _this.onMouseMove);
             return _this;
         }
         AircarftPanel.prototype.onMouseMove = function (arg) {
             console.log(arg);
+            console.log("dd");
         };
         AircarftPanel.prototype.setData = function (data) {
             this._isSelf = data["isSelf"];
-            var skinAry = Laya.Loader.getAtlas("res/atlas/comp.atlas");
-            var tex = Laya.Loader.getRes(skinAry[4]);
-            this._render.graphics.drawTexture(tex);
+            this._attrID = data["attrID"];
+            this._typeID = data["typeID"];
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            if (tex == null) {
+                manager.AtlasResourceManager.Instance.loadAtlas("res/atlas/" +
+                    manager.AtlasResourceManager.AIRCRAFT_PANEL + ".atlas", laya.utils.Handler.create(this, this.onLoadAtlasComplete));
+            }
+            else {
+                this.setRenderTexture(tex);
+            }
+        };
+        AircarftPanel.prototype.onLoadAtlasComplete = function () {
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            this.setRenderTexture(tex);
+        };
+        AircarftPanel.prototype.setRenderTexture = function (texture) {
+            if (texture == null || this._render == null) {
+                return;
+            }
+            this._render.graphics.drawTexture(texture);
         };
         /**改变方向 */
         AircarftPanel.prototype.changeDir = function (dir) {
@@ -65,6 +86,7 @@ var gameobject;
             enumerable: true,
             configurable: true
         });
+        AircarftPanel.ATTR_NAME = "panel";
         return AircarftPanel;
     }(gameobject.GameObject));
     gameobject.AircarftPanel = AircarftPanel;
