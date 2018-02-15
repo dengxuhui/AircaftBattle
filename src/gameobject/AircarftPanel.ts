@@ -50,10 +50,11 @@ module gameobject{
 		}
 
 		private setRenderTexture(texture:laya.resource.Texture):void{
-			if(texture == null || this._render == null){
+			if(texture == null){
 				return;
 			}
 			this._render.graphics.drawTexture(texture);
+			this.size(texture.width,texture.height);			
 		}
 
 		public dispose():void{

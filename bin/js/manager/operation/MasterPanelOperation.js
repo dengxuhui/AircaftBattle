@@ -13,11 +13,29 @@ var __extends = (this && this.__extends) || (function () {
 */
 var operation;
 (function (operation) {
+    var Rectangle = Laya.Rectangle;
     var MasterPanelOperation = /** @class */ (function (_super) {
         __extends(MasterPanelOperation, _super);
         function MasterPanelOperation() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this._isLock = true;
+            _this._dragRect = null;
+            _this._dragRect = new Rectangle(0, 0, Laya.stage.width, Laya.stage.height);
+            return _this;
         }
+        MasterPanelOperation.prototype.register = function (soure) {
+            this._source = soure;
+            this._source.on(Laya.Event.MOUSE_DOWN, this, this.onDrag);
+        };
+        MasterPanelOperation.prototype.onDrag = function (e) {
+            this._source.startDrag(this._dragRect);
+        };
+        MasterPanelOperation.prototype.unregister = function () {
+            if (this._source == null) {
+                return;
+            }
+            this._source.off(Laya.Event.MOUSE_DOWN, this, this.onDrag);
+        };
         return MasterPanelOperation;
     }(operation.BaseOperation));
     operation.MasterPanelOperation = MasterPanelOperation;

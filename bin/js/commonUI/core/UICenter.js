@@ -25,6 +25,14 @@ var UICenter = /** @class */ (function (_super) {
         }
         return this._instance;
     };
+    UICenter.prototype.addManager = function (id, className) {
+        if (className == null) {
+            return;
+        }
+        var manager = new className();
+        manager.id = id;
+        this._managers.addValue(id, manager);
+    };
     UICenter._instance = null;
     return UICenter;
 }(BaseUICenter));

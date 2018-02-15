@@ -3,9 +3,10 @@ import View=laya.ui.View;
 import Dialog=laya.ui.Dialog;
 module ui {
     export class GameSceneUI extends View {
+		public imgBg:Laya.Image;
 		public progressCurEnemyHp:Laya.ProgressBar;
 
-        public static  uiView:any ={"type":"View","props":{"width":480,"height":800},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"gameScene/img_systemimg.png"}},{"type":"ProgressBar","props":{"y":10,"x":56,"width":355,"var":"progressCurEnemyHp","skin":"comp/progress.png","height":14}}]};
+        public static  uiView:any ={"type":"View","props":{"width":480,"height":800},"child":[{"type":"Image","props":{"y":0,"x":0,"var":"imgBg","skin":"gameScene/img_systemimg.png"}},{"type":"ProgressBar","props":{"y":10,"x":56,"width":355,"var":"progressCurEnemyHp","skin":"comp/progress.png","height":14}}]};
         constructor(){ super()}
         createChildren():void {
         

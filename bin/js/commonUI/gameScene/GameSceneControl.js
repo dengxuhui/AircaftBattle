@@ -16,7 +16,9 @@ var commonUI;
     var GameSceneControl = /** @class */ (function (_super) {
         __extends(GameSceneControl, _super);
         function GameSceneControl() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this._rollBgAry = null;
+            return _this;
         }
         GameSceneControl.prototype.onShow = function () {
             var uiData = this._dataCenter.getData(commonUI.GameSceneUIData);
@@ -24,12 +26,34 @@ var commonUI;
             if (uiData != null && view != null) {
                 view.progressCurEnemyHp.visible = uiData.curEnemy != null;
             }
+            this._rollBgAry = new Array();
+            this._rollBgAry.push(view.imgBg);
+            var scBg = new Laya.Image(view.imgBg.skin);
+            scBg.y = -Laya.stage.height;
+            view.addChild(scBg);
+            this._rollBgAry.push(scBg);
+            this.startRollBg();
             //改逻辑应由一个状态栈所控制，这里为了简化 直接通过UI控制战斗逻辑入口开始及初始化
             manager.BattleLogicManager.instance().inintBattleLoagic();
         };
         GameSceneControl.prototype.onHide = function () {
             manager.BattleLogicManager.instance().uninitBattleLogic();
         };
+        GameSceneControl.prototype.startRollBg = function () {
+            Laya.timer.frameLoop(1, this, this.moveBg);
+        };
+        GameSceneControl.prototype.moveBg = function () {
+            for (var i = 0; i < this._rollBgAry.length; i++) {
+                var img = this._rollBgAry[i];
+                img.y += GameSceneControl.MOVE_SPEED;
+            }
+            var firstImg = this._rollBgAry[0];
+            if (firstImg.y >= Laya.stage.height) {
+                firstImg.y = this._rollBgAry[1].y - this._rollBgAry[1].height;
+                this._rollBgAry.push(this._rollBgAry.shift());
+            }
+        };
+        GameSceneControl.MOVE_SPEED = 2;
         return GameSceneControl;
     }(BaseUIControl));
     commonUI.GameSceneControl = GameSceneControl;

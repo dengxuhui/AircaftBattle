@@ -27,6 +27,7 @@ var gameobject;
             /**引用计数 */
             _this._refCount = 0;
             _this._isWaitForDispose = false;
+            _this.pivot(0, 0);
             return _this;
         }
         GameObject.prototype.setData = function (data) {

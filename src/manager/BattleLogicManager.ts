@@ -21,7 +21,7 @@ module manager{
 			var panel:gameobject.GameObject = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.PANEL,panelData);
 			panel.x = panel.getBounds().width /2;
 			panel.y = panel.getBounds().height / 2;
-			manager.LayerManager.instance().addToLayer(panel,LAYER.BATTLE);
+			manager.LayerManager.instance().addToLayer(panel,LAYER.BATTLE);							
 		}
 
 		public uninitBattleLogic():void{

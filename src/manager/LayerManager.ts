@@ -24,6 +24,8 @@ module manager{
 			}
 			for(var i:number = 0;i < this._layerMap.length;i++){
 				var sp:Sprite = this._layerMap.getValueByIndex(i);
+				sp.mouseEnabled = true;
+				sp.mouseThrough = true;
 				Laya.stage.addChild(sp);
 			}
 		}

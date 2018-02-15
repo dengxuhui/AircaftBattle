@@ -22,18 +22,11 @@ var gameobject;
             _this._curDir = DIRECTION.UP;
             _this._attrID = -1;
             _this._typeID = -1;
+            _this._operationID = -1;
             _this._render = new Sprite();
             _this.addChild(_this._render);
-            if (laya.utils.Browser.onPC) {
-                _this._render.on(Laya.Event.MOUSE_MOVE, _this, _this.onMouseMove);
-            }
-            _this._render.on(Laya.Event.MOUSE_DOWN, _this, _this.onMouseMove);
             return _this;
         }
-        AircarftPanel.prototype.onMouseMove = function (arg) {
-            console.log(arg);
-            console.log("dd");
-        };
         AircarftPanel.prototype.setData = function (data) {
             this._isSelf = data["isSelf"];
             this._attrID = data["attrID"];
@@ -46,46 +39,27 @@ var gameobject;
             else {
                 this.setRenderTexture(tex);
             }
+            if (this._isSelf) {
+                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
+            }
+            else {
+                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
+            }
         };
         AircarftPanel.prototype.onLoadAtlasComplete = function () {
             var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
             this.setRenderTexture(tex);
         };
         AircarftPanel.prototype.setRenderTexture = function (texture) {
-            if (texture == null || this._render == null) {
+            if (texture == null) {
                 return;
             }
             this._render.graphics.drawTexture(texture);
+            this.size(texture.width, texture.height);
         };
-        /**改变方向 */
-        AircarftPanel.prototype.changeDir = function (dir) {
-            this.changeSkin(dir);
-            //最后赋值
-            this._curDir = dir;
+        AircarftPanel.prototype.dispose = function () {
+            manager.OperationManager.Instance.unregisterOperation(this._operationID);
         };
-        /**更改皮肤 */
-        AircarftPanel.prototype.changeSkin = function (dir) {
-            if (this._curDir == dir) {
-                return;
-            }
-            switch (dir) {
-                case DIRECTION.UP: {
-                }
-                case DIRECTION.DOWN: {
-                }
-                case DIRECTION.LEFT: {
-                }
-                case DIRECTION.RIGHT: {
-                }
-            }
-        };
-        Object.defineProperty(AircarftPanel.prototype, "curDir", {
-            get: function () {
-                return this._curDir;
-            },
-            enumerable: true,
-            configurable: true
-        });
         AircarftPanel.ATTR_NAME = "panel";
         return AircarftPanel;
     }(gameobject.GameObject));

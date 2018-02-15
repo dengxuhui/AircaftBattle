@@ -21,7 +21,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.GameSceneUI.uiView);
         };
-        GameSceneUI.uiView = { "type": "View", "props": { "width": 480, "height": 800 }, "child": [{ "type": "Image", "props": { "y": 0, "x": 0, "skin": "gameScene/img_systemimg.png" } }, { "type": "ProgressBar", "props": { "y": 10, "x": 56, "width": 355, "var": "progressCurEnemyHp", "skin": "comp/progress.png", "height": 14 } }] };
+        GameSceneUI.uiView = { "type": "View", "props": { "width": 480, "height": 800 }, "child": [{ "type": "Image", "props": { "y": 0, "x": 0, "var": "imgBg", "skin": "gameScene/img_systemimg.png" } }, { "type": "ProgressBar", "props": { "y": 10, "x": 56, "width": 355, "var": "progressCurEnemyHp", "skin": "comp/progress.png", "height": 14 } }] };
         return GameSceneUI;
     }(View));
     ui.GameSceneUI = GameSceneUI;

@@ -9,7 +9,7 @@ class Main {
         Laya.stage.frameRate = Laya.Stage.FRAME_FAST;
         Laya.stage.bgColor = "#ffffff";
         Laya.stage.scaleMode = "vertical";
-        Laya.stage.alignH = "center";
+        Laya.stage.alignH = "center";        
 
         //fps调试器
         // Laya.Stat.show();

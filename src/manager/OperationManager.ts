@@ -29,7 +29,7 @@ module manager{
 			else{
 				cls = this._operationClsDiC.get(operationType);
 			}
-			var registerOperation:operation.BaseOperation = new cls(source);
+			var registerOperation:operation.BaseOperation = new cls();
 			registerOperation.register(source);
 			this._registerNum ++;
 			this._registeringDic.set(this._registerNum,registerOperation);			

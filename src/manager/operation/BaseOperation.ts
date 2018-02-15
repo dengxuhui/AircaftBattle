@@ -3,12 +3,12 @@
 */
 module operation{
 	export class BaseOperation{
-		constructor(){
+		protected _source:gameobject.GameObject = null;
 
+		constructor(){
 		}
 
-		public register(soure:gameobject.GameObject):void{
-
+		public register(soure:gameobject.GameObject):void{			
 		}
 
 		public unregister():void{

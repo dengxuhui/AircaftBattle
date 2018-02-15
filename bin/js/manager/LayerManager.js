@@ -21,6 +21,8 @@ var manager;
             }
             for (var i = 0; i < this._layerMap.length; i++) {
                 var sp = this._layerMap.getValueByIndex(i);
+                sp.mouseEnabled = true;
+                sp.mouseThrough = true;
                 Laya.stage.addChild(sp);
             }
         };

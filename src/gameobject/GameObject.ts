@@ -17,6 +17,7 @@ module gameobject{
 
 		constructor(){
 			super();
+			this.pivot(0,0);
 		}
 
 		public setData(data:any):void{
