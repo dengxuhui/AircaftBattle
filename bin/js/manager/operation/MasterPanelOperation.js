@@ -26,10 +26,19 @@ var operation;
         MasterPanelOperation.prototype.register = function (soure) {
             this._source = soure;
             this._source.on(Laya.Event.MOUSE_DOWN, this, this.onDrag);
+            // this._source.on(Laya.Event.MOUSE_UP,this,this.onMouseUp);
         };
         MasterPanelOperation.prototype.onDrag = function (e) {
             this._source.startDrag(this._dragRect);
+            // this._source.on(Laya.Event.MOUSE_MOVE,this,this.onMouseMove);
         };
+        //用于检测移动方向  改变texture
+        // private onMouseUp(e:Laya.Event):void{
+        // 	this._source.off(Laya.Event.MOUSE_MOVE,this,this.onMouseMove);
+        // }
+        // private onMouseMove(e:Laya.Event):void{
+        // 	// this._source
+        // }
         MasterPanelOperation.prototype.unregister = function () {
             if (this._source == null) {
                 return;

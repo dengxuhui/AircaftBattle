@@ -53,7 +53,9 @@ module gameobject {
 			if(obj.refCount > 0){//被从资源池重复利用过
 				var secondObjAry:Array<gameobject.GameObject> = this._objectSecondPoolMap.getValueByKey(objType);
 				if(secondObjAry == null){
-					console.assert(false,"野资源");
+					// console.assert(false,"野资源");
+					secondObjAry = new Array<gameobject.GameObject>();
+					this._objectSecondPoolMap.addValue(objType,secondObjAry);
 				}
 				secondObjAry.push(obj);
 			}
@@ -115,10 +117,10 @@ module gameobject {
 				gameFirstObjAry == null || gameFirstObjAry.length <= 0)) {
 				return null;
 			}
-			if(gameSecondObjAry.length > 0){
+			if(gameSecondObjAry != null && gameSecondObjAry.length > 0){
 				gameObj = gameSecondObjAry.shift();
 			}
-			else{
+			else if(gameFirstObjAry != null && gameFirstObjAry.length > 0){
 				gameObj = gameFirstObjAry.shift();
 			}
 

@@ -25,10 +25,29 @@ var gameobject;
             return _this;
         }
         Bullet.prototype.setData = function (data) {
-            var skin = data.skin;
-            var texture = Laya.loader.getRes(skin);
-            this._render.graphics.drawTexture(texture);
+            this._attrID = data["attrID"];
+            this._typeID = data["typeID"];
+            this._isSelf = data["isSelf"];
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.BULLET, Bullet.BULLET, this._attrID, this._typeID);
+            if (tex == null) {
+                manager.AtlasResourceManager.Instance.loadAtlas(manager.AtlasResourceManager.AIRCRAFT_PANEL, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
+            }
+            else {
+                this.setRenderTexture(tex);
+            }
         };
+        Bullet.prototype.onLoadAtlasComplete = function () {
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, gameobject.AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            this.setRenderTexture(tex);
+        };
+        Bullet.prototype.setRenderTexture = function (texture) {
+            if (texture == null) {
+                return;
+            }
+            this._render.graphics.drawTexture(texture);
+            this.size(texture.width, texture.height);
+        };
+        Bullet.BULLET = "bullet";
         return Bullet;
     }(gameobject.GameObject));
     gameobject.Bullet = Bullet;

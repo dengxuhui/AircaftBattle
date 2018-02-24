@@ -8,6 +8,7 @@ module manager{
 		private _curLoadAtlasDic:Dictionary = new Dictionary();
 
 		public static AIRCRAFT_PANEL:string = "aircraftPanel";
+		public static BULLET:string = "bullet";
 
 		constructor(){
 
@@ -22,7 +23,8 @@ module manager{
 		}
 
 		/**加载图集 */
-		public loadAtlas(url:string,onComplete:laya.utils.Handler = null):void{
+		public loadAtlas(atlasType:string,onComplete:laya.utils.Handler = null):void{
+			var url = "res/atlas/" + atlasType + ".atlas";
 			//TODO 更改为正则表达式			
 			var atlasNameAry:string[] = url.split(".")[0].split("/");
 			var atlasName:string = atlasNameAry[atlasNameAry.length - 1];

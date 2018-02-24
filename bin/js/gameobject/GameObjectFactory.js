@@ -59,7 +59,9 @@ var gameobject;
             if (obj.refCount > 0) {
                 var secondObjAry = this._objectSecondPoolMap.getValueByKey(objType);
                 if (secondObjAry == null) {
-                    console.assert(false, "野资源");
+                    // console.assert(false,"野资源");
+                    secondObjAry = new Array();
+                    this._objectSecondPoolMap.addValue(objType, secondObjAry);
                 }
                 secondObjAry.push(obj);
             }
@@ -113,10 +115,10 @@ var gameobject;
             if ((gameSecondObjAry == null || gameSecondObjAry.length <= 0) && (gameFirstObjAry == null || gameFirstObjAry.length <= 0)) {
                 return null;
             }
-            if (gameSecondObjAry.length > 0) {
+            if (gameSecondObjAry != null && gameSecondObjAry.length > 0) {
                 gameObj = gameSecondObjAry.shift();
             }
-            else {
+            else if (gameFirstObjAry != null && gameFirstObjAry.length > 0) {
                 gameObj = gameFirstObjAry.shift();
             }
             if (gameObj == null) {

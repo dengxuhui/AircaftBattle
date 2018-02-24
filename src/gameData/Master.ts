@@ -11,6 +11,7 @@ module gameData{
 		public static MONEY:string = "money";
 		public static ENERGY:string = "energy";
 		public static NAME:string = "name";
+		public static DEFAULT_PANEL_NUM:string = "default_panel_num";
 
 		private static _instance:Master = null;
 				 

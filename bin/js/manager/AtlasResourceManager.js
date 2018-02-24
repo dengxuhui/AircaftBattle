@@ -19,8 +19,9 @@ var manager;
             configurable: true
         });
         /**加载图集 */
-        AtlasResourceManager.prototype.loadAtlas = function (url, onComplete) {
+        AtlasResourceManager.prototype.loadAtlas = function (atlasType, onComplete) {
             if (onComplete === void 0) { onComplete = null; }
+            var url = "res/atlas/" + atlasType + ".atlas";
             //TODO 更改为正则表达式			
             var atlasNameAry = url.split(".")[0].split("/");
             var atlasName = atlasNameAry[atlasNameAry.length - 1];
@@ -64,6 +65,7 @@ var manager;
         };
         AtlasResourceManager._instance = null;
         AtlasResourceManager.AIRCRAFT_PANEL = "aircraftPanel";
+        AtlasResourceManager.BULLET = "bullet";
         return AtlasResourceManager;
     }());
     manager.AtlasResourceManager = AtlasResourceManager;

@@ -54,6 +54,7 @@ var gameData;
         Master.MONEY = "money";
         Master.ENERGY = "energy";
         Master.NAME = "name";
+        Master.DEFAULT_PANEL_NUM = "default_panel_num";
         Master._instance = null;
         return Master;
     }());

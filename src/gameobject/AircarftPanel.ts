@@ -11,12 +11,24 @@ module gameobject{
 		private _attrID:number = -1;
 		private _typeID:number = -1;
 		private _operationID:number = -1;
-
+		private _bulletMgr:manager.BulletCreatorManager = null;
 
 		constructor(){
 			super();
 			this._render = new Sprite();							
 			this.addChild(this._render);	
+		}
+
+		public get typeID():number{
+			return this._typeID;
+		}
+
+		public get attrID():number{
+			return this._attrID;
+		}
+
+		public get isSelf():boolean{
+			return this._isSelf;
 		}
 
 		public setData(data:any):void{
@@ -27,8 +39,8 @@ module gameobject{
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
 				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
 			if(tex == null){
-				manager.AtlasResourceManager.Instance.loadAtlas("res/atlas/" + 
-				manager.AtlasResourceManager.AIRCRAFT_PANEL + ".atlas",
+				manager.AtlasResourceManager.Instance.loadAtlas(
+				manager.AtlasResourceManager.AIRCRAFT_PANEL,
 				laya.utils.Handler.create(this,this.onLoadAtlasComplete));
 			}
 			else{
@@ -47,6 +59,8 @@ module gameobject{
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
 				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
 			this.setRenderTexture(tex);
+
+			this._bulletMgr = new manager.BulletCreatorManager(this);			
 		}
 
 		private setRenderTexture(texture:laya.resource.Texture):void{
@@ -59,6 +73,9 @@ module gameobject{
 
 		public dispose():void{
 			manager.OperationManager.Instance.unregisterOperation(this._operationID);
+			if(this._bulletMgr != null){
+				this._bulletMgr.dispose();
+			}			
 		}
 	}
 }

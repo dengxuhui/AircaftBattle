@@ -43,6 +43,10 @@ P 6228FC88 boss1_1.png
 P F4A5B286 boss1_2.png
 P 98E96ADF boss1_3.png
 P 03F7F53E boss1_4.png
+D bullet
+P 65E65222 bullet_0_type_0.png
+P 94112CD1 bullet_0_type_1.png
+P 39F9AFAF bullet_0_type_2.png
 D comp
 P D12221A9 bg.png
 P 9401CC40 blank.png

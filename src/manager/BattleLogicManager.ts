@@ -19,8 +19,8 @@ module manager{
 		public inintBattleLoagic():void{
 			var panelData = {isSelf:true,attrID:0,typeID:0}
 			var panel:gameobject.GameObject = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.PANEL,panelData);
-			panel.x = panel.getBounds().width /2;
-			panel.y = panel.getBounds().height / 2;
+			panel.pos((Laya.stage.width - 88) / 2 ,Laya.stage.height - 100);	
+			
 			manager.LayerManager.instance().addToLayer(panel,LAYER.BATTLE);							
 		}
 
