@@ -35,7 +35,7 @@ module gameobject{
 
 		private onLoadAtlasComplete():void{
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
+				manager.AtlasResourceManager.AIRCRAFT_PANEL,Bullet.BULLET,this._attrID,this._typeID);
 			this.setRenderTexture(tex);
 		}
 
