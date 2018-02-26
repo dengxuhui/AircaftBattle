@@ -12,6 +12,7 @@ module gameobject{
 		private _typeID:number = -1;
 		private _uID:number = -1;
 		private _bulletMgr:manager.BulletCreatorManager = null;
+		private _curTexture:laya.resource.Texture = null;
 
 		constructor(){
 			super();
@@ -46,13 +47,6 @@ module gameobject{
 			else{
 				this.setRenderTexture(tex);
 			}
-
-			if(this._isSelf){
-				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.MASTER_PANEL);
-			}
-			else{
-				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
-			}
 		}
 
 		private onLoadAtlasComplete():void{
@@ -65,10 +59,19 @@ module gameobject{
 			if(texture == null){
 				return;
 			}
-			this._render.graphics.drawTexture(texture);
-			this.size(texture.width,texture.height);			
-
-			this._bulletMgr = new manager.BulletCreatorManager(this);	
+			//避免高频DC
+			if(this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)){
+				this._render.graphics.drawTexture(texture);
+				this.size(texture.width,texture.height);	
+			}			
+			
+			if(this._isSelf){
+				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.MASTER_PANEL);
+			}
+			else{
+				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
+			}
+			this._bulletMgr = new manager.BulletCreatorManager(this);			
 		}
 
 		public get uID():number{

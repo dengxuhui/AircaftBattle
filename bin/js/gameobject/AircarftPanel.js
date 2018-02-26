@@ -22,8 +22,9 @@ var gameobject;
             _this._curDir = DIRECTION.UP;
             _this._attrID = -1;
             _this._typeID = -1;
-            _this._operationID = -1;
+            _this._uID = -1;
             _this._bulletMgr = null;
+            _this._curTexture = null;
             _this._render = new Sprite();
             _this.addChild(_this._render);
             return _this;
@@ -60,12 +61,6 @@ var gameobject;
             else {
                 this.setRenderTexture(tex);
             }
-            if (this._isSelf) {
-                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
-            }
-            else {
-                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
-            }
         };
         AircarftPanel.prototype.onLoadAtlasComplete = function () {
             var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
@@ -75,12 +70,28 @@ var gameobject;
             if (texture == null) {
                 return;
             }
-            this._render.graphics.drawTexture(texture);
-            this.size(texture.width, texture.height);
+            //避免高频DC
+            if (this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)) {
+                this._render.graphics.drawTexture(texture);
+                this.size(texture.width, texture.height);
+            }
+            if (this._isSelf) {
+                this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
+            }
+            else {
+                this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
+            }
             this._bulletMgr = new manager.BulletCreatorManager(this);
         };
+        Object.defineProperty(AircarftPanel.prototype, "uID", {
+            get: function () {
+                return this._uID;
+            },
+            enumerable: true,
+            configurable: true
+        });
         AircarftPanel.prototype.dispose = function () {
-            manager.OperationManager.Instance.unregisterOperation(this._operationID);
+            manager.OperationManager.Instance.unregisterOperation(this._uID);
             if (this._bulletMgr != null) {
                 this._bulletMgr.dispose();
             }

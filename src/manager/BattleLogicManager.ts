@@ -57,10 +57,11 @@ module manager{
 				instance().createObject(GAMEOJB_TYPE.PANEL,panelData);
 
 				var addPosRandom:number = randomTypeID - 1 < 0 ? 0 : randomTypeID - 1;
-				var row:number = this._enemyPanels[addPosRandom];
+				var row:number = this._enemyPosAry[addPosRandom];
 				panel.pos(Laya.stage.width / 5 * addPosRandom,-panel.height - row * panel.height);
-
+				this._enemyPosAry[addPosRandom] = row + 1;
 				manager.LayerManager.instance().addToLayer(panel,LAYER.BATTLE);
+				// panel.getBounds().intersection()
 			}
 
 			this.resetEnemyPosAry();

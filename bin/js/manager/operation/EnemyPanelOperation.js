@@ -16,12 +16,32 @@ var operation;
     var EnemyPanelOperation = /** @class */ (function (_super) {
         __extends(EnemyPanelOperation, _super);
         function EnemyPanelOperation() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this._enemy = null;
+            return _this;
         }
         EnemyPanelOperation.prototype.register = function (source) {
+            this._enemy = source;
+            if (this._enemy != null) {
+                Laya.timer.frameLoop(1, this, this.update);
+            }
+        };
+        EnemyPanelOperation.prototype.update = function () {
+            if (this._enemy.y > Laya.stage.height) {
+                if (this._enemy.parent != null) {
+                    this._enemy.parent.removeChild(this._enemy);
+                }
+                Laya.timer.clear(this, this.update);
+                gameobject.GameObjectFactory.instance().disposeObj(this._source, GAMEOJB_TYPE.PANEL);
+            }
+            else {
+                this._enemy.y += EnemyPanelOperation.ENEMY_FLY_SPEED;
+            }
         };
         EnemyPanelOperation.prototype.unregister = function () {
+            Laya.timer.clear(this, this.update);
         };
+        EnemyPanelOperation.ENEMY_FLY_SPEED = 5;
         return EnemyPanelOperation;
     }(operation.BaseOperation));
     operation.EnemyPanelOperation = EnemyPanelOperation;
