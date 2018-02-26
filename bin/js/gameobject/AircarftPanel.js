@@ -70,7 +70,6 @@ var gameobject;
         AircarftPanel.prototype.onLoadAtlasComplete = function () {
             var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
             this.setRenderTexture(tex);
-            this._bulletMgr = new manager.BulletCreatorManager(this);
         };
         AircarftPanel.prototype.setRenderTexture = function (texture) {
             if (texture == null) {
@@ -78,6 +77,7 @@ var gameobject;
             }
             this._render.graphics.drawTexture(texture);
             this.size(texture.width, texture.height);
+            this._bulletMgr = new manager.BulletCreatorManager(this);
         };
         AircarftPanel.prototype.dispose = function () {
             manager.OperationManager.Instance.unregisterOperation(this._operationID);

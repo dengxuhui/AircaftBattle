@@ -58,9 +58,7 @@ module gameobject{
 		private onLoadAtlasComplete():void{
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
 				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
-			this.setRenderTexture(tex);
-
-			this._bulletMgr = new manager.BulletCreatorManager(this);			
+			this.setRenderTexture(tex);					
 		}
 
 		private setRenderTexture(texture:laya.resource.Texture):void{
@@ -69,6 +67,8 @@ module gameobject{
 			}
 			this._render.graphics.drawTexture(texture);
 			this.size(texture.width,texture.height);			
+
+			this._bulletMgr = new manager.BulletCreatorManager(this);	
 		}
 
 		public dispose():void{

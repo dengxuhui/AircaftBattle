@@ -12,7 +12,7 @@ class Main {
         Laya.stage.alignH = "center";        
 
         //fps调试器
-        // Laya.Stat.show();
+        Laya.Stat.show();
 
         Laya.loader.load([
             { url: "res/atlas/public.atlas", type: Laya.Loader.ATLAS },

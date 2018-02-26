@@ -34,4 +34,4 @@ var manager;
     }());
     manager.BulletCreatorManager = BulletCreatorManager;
 })(manager || (manager = {}));
-//# sourceMappingURL=BulletCretorManager.js.map
+//# sourceMappingURL=BulletCreatorManager.js.map

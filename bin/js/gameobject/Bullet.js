@@ -20,6 +20,7 @@ var gameobject;
             var _this = _super.call(this) || this;
             /**渲染对象 */
             _this._render = null;
+            _this._curTexture = null;
             _this._render = new Sprite();
             _this.addChild(_this._render);
             return _this;
@@ -37,16 +38,47 @@ var gameobject;
             }
         };
         Bullet.prototype.onLoadAtlasComplete = function () {
-            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, gameobject.AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, Bullet.BULLET, this._attrID, this._typeID);
             this.setRenderTexture(tex);
         };
         Bullet.prototype.setRenderTexture = function (texture) {
             if (texture == null) {
                 return;
             }
-            this._render.graphics.drawTexture(texture);
-            this.size(texture.width, texture.height);
+            if (this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)) {
+                this._render.graphics.drawTexture(texture);
+                this.size(texture.width, texture.height);
+                this._curTexture = texture;
+            }
+            Laya.timer.frameLoop(1, this, this.update);
         };
+        Bullet.prototype.update = function () {
+            if (this._isSelf) {
+                if (this.y < 0) {
+                    if (this.parent != null) {
+                        this.parent.removeChild(this);
+                    }
+                    Laya.timer.clear(this, this.update);
+                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOJB_TYPE.BULLET);
+                }
+                else {
+                    this.y -= Bullet.MOVE_SPEED;
+                }
+            }
+            else {
+                if (this.y > Laya.stage.height) {
+                    if (this.parent != null) {
+                        this.parent.removeChild(this);
+                    }
+                    Laya.timer.clear(this, this.update);
+                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOJB_TYPE.BULLET);
+                }
+                else {
+                    this.y += Bullet.MOVE_SPEED;
+                }
+            }
+        };
+        Bullet.MOVE_SPEED = 5;
         Bullet.BULLET = "bullet";
         return Bullet;
     }(gameobject.GameObject));
