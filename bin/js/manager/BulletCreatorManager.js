@@ -24,7 +24,10 @@ var manager;
         };
         BulletCreatorManager.prototype.create = function () {
             var bullet = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET, this._data);
-            bullet.pos(this._host.x, this._host.y);
+            bullet.pos(this._host.x + this._host.width / 2, this._host.y - bullet.height / 2);
+            var sprite = new Laya.Sprite();
+            sprite.graphics.drawLine(0, 0, Laya.stage.width, 0, ColorUtil.HTML_BLACK, 1);
+            bullet.addChild(sprite);
             manager.LayerManager.instance().addToLayer(bullet, LAYER.BATTLE);
         };
         BulletCreatorManager.prototype.dispose = function () {

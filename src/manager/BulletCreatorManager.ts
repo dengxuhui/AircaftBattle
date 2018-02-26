@@ -34,7 +34,7 @@ module manager{
 			var bullet:gameobject.Bullet = 
 			gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET,this._data);
 			
-			bullet.pos(this._host.x,this._host.y);
+			bullet.pos(this._host.x + this._host.width / 2,this._host.y - bullet.height / 2);			
 			manager.LayerManager.instance().addToLayer(bullet,LAYER.BATTLE);			
 		}
 

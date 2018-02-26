@@ -45,6 +45,7 @@ var gameobject;
             if (texture == null) {
                 return;
             }
+            //避免高频DC
             if (this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)) {
                 this._render.graphics.drawTexture(texture);
                 this.size(texture.width, texture.height);
