@@ -7,10 +7,7 @@ module gameobject{
 		private static MOVE_SPEED:number = 5;
 		private static BULLET:string = "bullet";
 		/**渲染对象 */
-		private _render:Sprite = null;
-		private _kindID:number;
-		private _typeID:number;	
-		private _statusID:number;	
+		private _render:Sprite = null;	
 		private _curTexture:laya.resource.Texture = null;
 
 		constructor(){
@@ -19,12 +16,7 @@ module gameobject{
 			this.addChild(this._render);
 		}
 
-		public setData(data:any):void{
-			this._kindID = data["kindID"];
-			this._typeID = data["typeID"];
-			this._isSelf = data["isSelf"];
-			this._statusID = data["statusID"];
-
+		public initialize():void{		
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
 			this._kindID,this._typeID,this._statusID);
 			if(tex == null){
@@ -63,7 +55,7 @@ module gameobject{
 						this.parent.removeChild(this);
 					}
 					Laya.timer.clear(this,this.update);
-					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOBJ_TYPE.BULLET);					
+					gameobject.GameObjectFactory.instance().disposeObj(this);					
 				}
 				else{
 					this.y -= Bullet.MOVE_SPEED;
@@ -75,7 +67,7 @@ module gameobject{
 						this.parent.removeChild(this);
 					}
 					Laya.timer.clear(this,this.update);
-					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOBJ_TYPE.BULLET);
+					gameobject.GameObjectFactory.instance().disposeObj(this)
 				}
 				else{
 					this.y += Bullet.MOVE_SPEED;

@@ -21,18 +21,54 @@ var gameobject;
             /**是否是自己 如果不是自己飞行方向会反向 */
             _this._isSelf = false;
             _this._canCache = false;
-            _this._data = null;
+            _this._kindID = -1;
+            _this._typeID = -1;
+            _this._statusID = -1;
             _this._layerType = LAYER.MAIN;
-            _this._gameObjType = -1;
+            _this._varsData = null;
             /**引用计数 */
             _this._refCount = 0;
             _this._isWaitForDispose = false;
             _this.pivot(0, 0);
             return _this;
         }
-        GameObject.prototype.setData = function (data) {
-            this._data = data;
+        GameObject.prototype.setData = function (kindID, typeID, statusID, isSelf, varsData) {
+            if (statusID === void 0) { statusID = 0; }
+            if (varsData === void 0) { varsData = null; }
+            this._kindID = kindID;
+            this._typeID = typeID;
+            this._statusID = statusID;
+            this._isSelf = isSelf;
+            this._varsData = varsData;
         };
+        Object.defineProperty(GameObject.prototype, "kindID", {
+            get: function () {
+                return this._kindID;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(GameObject.prototype, "typeID", {
+            get: function () {
+                return this._typeID;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(GameObject.prototype, "statusID", {
+            get: function () {
+                return this._statusID;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(GameObject.prototype, "varsData", {
+            get: function () {
+                return this._varsData;
+            },
+            enumerable: true,
+            configurable: true
+        });
         GameObject.prototype.initialize = function () {
         };
         GameObject.prototype.uninitialize = function () {
@@ -45,16 +81,6 @@ var gameobject;
             },
             set: function (value) {
                 this._isWaitForDispose = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(GameObject.prototype, "gameObjType", {
-            get: function () {
-                return this._gameObjType;
-            },
-            set: function (value) {
-                this._gameObjType = value;
             },
             enumerable: true,
             configurable: true

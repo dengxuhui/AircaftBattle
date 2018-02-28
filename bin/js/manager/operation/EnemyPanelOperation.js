@@ -32,7 +32,7 @@ var operation;
                     this._enemy.parent.removeChild(this._enemy);
                 }
                 Laya.timer.clear(this, this.update);
-                gameobject.GameObjectFactory.instance().disposeObj(this._source, GAMEOBJ_TYPE.PANEL);
+                gameobject.GameObjectFactory.instance().disposeObj(this._source);
             }
             else {
                 this._enemy.y += EnemyPanelOperation.ENEMY_FLY_SPEED;

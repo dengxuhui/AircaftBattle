@@ -20,9 +20,6 @@ var gameobject;
             var _this = _super.call(this) || this;
             _this._render = null;
             _this._curDir = DIRECTION.UP;
-            _this._kindID = -1;
-            _this._typeID = -1;
-            _this._statusID = -1;
             _this._uID = -1;
             _this._bulletMgr = null;
             _this._curTexture = null;
@@ -58,11 +55,7 @@ var gameobject;
             enumerable: true,
             configurable: true
         });
-        AircarftPanel.prototype.setData = function (data) {
-            this._isSelf = data["isSelf"];
-            this._kindID = data["kindID"];
-            this._typeID = data["typeID"];
-            this._statusID = data["statusID"] != null ? data["statusID"] : 0;
+        AircarftPanel.prototype.initialize = function () {
             var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             if (tex == null) {
                 manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG, this._kindID, laya.utils.Handler.create(this, this.onLoadAtlasComplete));

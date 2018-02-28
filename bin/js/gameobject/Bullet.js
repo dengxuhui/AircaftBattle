@@ -25,11 +25,7 @@ var gameobject;
             _this.addChild(_this._render);
             return _this;
         }
-        Bullet.prototype.setData = function (data) {
-            this._kindID = data["kindID"];
-            this._typeID = data["typeID"];
-            this._isSelf = data["isSelf"];
-            this._statusID = data["statusID"];
+        Bullet.prototype.initialize = function () {
             var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             if (tex == null) {
                 manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG, this._kindID, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
@@ -61,7 +57,7 @@ var gameobject;
                         this.parent.removeChild(this);
                     }
                     Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOBJ_TYPE.BULLET);
+                    gameobject.GameObjectFactory.instance().disposeObj(this);
                 }
                 else {
                     this.y -= Bullet.MOVE_SPEED;
@@ -73,7 +69,7 @@ var gameobject;
                         this.parent.removeChild(this);
                     }
                     Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOBJ_TYPE.BULLET);
+                    gameobject.GameObjectFactory.instance().disposeObj(this);
                 }
                 else {
                     this.y += Bullet.MOVE_SPEED;

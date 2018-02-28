@@ -8,15 +8,15 @@ module gameobject {
 		private static MAX_CACHE_NUM: number = 1000;
 		private _objClassDic: Dictionary = null;
 		/**一级缓存用于缓存只被用了一次的资源 */
-		private _objectFirstPoolMap: Map = null;
+		private _objectFirstPool: Dictionary = null;
 		/**二级缓存用于缓存经常使用的资源，从资源池拿去先从当前资源池拿取 */
-		private _objectSecondPoolMap: Map = null;
+		private _objectSecondPool: Dictionary = null;
 		private _curCacheObjNum: number = 0;
 
 		constructor() {
 			super();
-			this._objectFirstPoolMap = new Map();
-			this._objectSecondPoolMap = new Map();
+			this._objectFirstPool = new Dictionary();
+			this._objectSecondPool = new Dictionary();
 			this._objClassDic = new Dictionary();
 			this._objClassDic.set(GAMEOBJ_TYPE.BULLET, gameobject.Bullet);
 			this._objClassDic.set(GAMEOBJ_TYPE.PANEL,gameobject.AircarftPanel);
@@ -29,42 +29,63 @@ module gameobject {
 			return this._instance;
 		}
 
-		public createObject(objType: number, data: any = null): any {
+		public createObject(kindID:number,typeID:number,statusID:number = 0,isSelf:boolean,varsData:object = null): any {
 			var gameObj: gameobject.GameObject = null;
-			gameObj = this.findObjInPool(objType);
+			gameObj = this.findObjInPool(kindID,typeID,statusID);
 			if (gameObj == null) {
-				var className: any = this._objClassDic.get(objType);
+				var className: any = this._objClassDic.get(kindID);
 				gameObj = new className();
-				gameObj.setData(data);
-				gameObj.gameObjType = objType;
+				gameObj.setData(kindID,typeID,statusID,isSelf,varsData);	
+				gameObj.initialize();			
 			}
 			else {
-				gameObj.setData(data);
+				gameObj.setData(kindID,typeID,statusID,isSelf,varsData);
+				gameObj.initialize();
 			}
 			return gameObj;
 		}
 
-		public disposeObj(obj: gameobject.GameObject, objType: number): void {
-			if (obj == null || objType < 0) {
+		public disposeObj(obj:gameobject.GameObject): void {
+			if (obj == null || obj.kindID < 0) {
 				return;
 			}
 			obj.isWaitForDispose = true;
 
 			if(obj.refCount > 0){//被从资源池重复利用过
-				var secondObjAry:Array<gameobject.GameObject> = this._objectSecondPoolMap.getValueByKey(objType);
-				if(secondObjAry == null){					
-					secondObjAry = new Array<gameobject.GameObject>();
-					this._objectSecondPoolMap.addValue(objType,secondObjAry);
+				var secondObjDic:Dictionary = this._objectSecondPool.get(obj.kindID);
+				if(secondObjDic == null){					
+					secondObjDic = new Dictionary();
+					this._objectSecondPool.set(obj.kindID,secondObjDic);
 				}
-				secondObjAry.push(obj);
+
+				var secondObjAry:Array<gameobject.GameObject> = null;
+				if(secondObjDic.indexOf(obj.typeID + "_" + obj.statusID) == -1){
+					secondObjAry = new Array<gameobject.GameObject>();
+					secondObjAry.push(obj);
+					secondObjDic.set(obj.typeID + "_" + obj.statusID,secondObjAry);
+				}
+				else{
+					secondObjAry = secondObjDic.get(obj.typeID + "_" + obj.statusID);
+					secondObjAry.push(obj);
+				}				
 			}
 			else{
-				var firstObjAry:Array<gameobject.GameObject> = this._objectFirstPoolMap.getValueByKey(objType);
-				if(firstObjAry == null){
-					firstObjAry = new Array<gameobject.GameObject>();
-					this._objectFirstPoolMap.addValue(objType,firstObjAry);
+				var firstObjDic:Dictionary = this._objectFirstPool.get(obj.kindID);
+				if(firstObjDic == null){
+					firstObjDic = new Dictionary();
+					this._objectFirstPool.set(obj.kindID,firstObjDic);
 				}
-				firstObjAry.push(obj);
+
+				var firstObjAry:Array<gameobject.GameObject> = null;
+				if(firstObjDic.indexOf(obj.typeID + "_" + obj.statusID) == -1){
+					firstObjAry = new Array<gameobject.GameObject>();
+					firstObjAry.push(obj);
+					firstObjDic.set(obj.typeID + "_" + obj.statusID,firstObjAry);
+				}
+				else{
+					firstObjAry = firstObjDic.get(obj.typeID + "_" + obj.statusID);
+					firstObjAry.push(obj);
+				}				
 			}
 			this._curCacheObjNum += 1;
 
@@ -76,25 +97,31 @@ module gameobject {
 		/*清理资源池 清理所有一级缓存* */
 		private cleanCachePool(): void {
 			var i:number = 0;
-			for(i = 0;i < this._objectFirstPoolMap.length;i++){
-				var objAry:Array<gameobject.GameObject> = this._objectFirstPoolMap.getValueByIndex(i);
-				if(objAry == null){
+			for(i = 0;i < this._objectFirstPool.values.length;i++){
+				var objDic:Dictionary = this._objectFirstPool.values[i];
+				if(objDic == null){
 					console.assert(false,"数组为空");
 					continue;
 				}
-				if(objAry.length <= 0){
+				if(objDic.values.length <= 0){
 					continue;
 				}
-				for(var j:number = 0;j < objAry.length;j++){
-					var obj:gameobject.GameObject = objAry[j];
-					if(obj == null){
+				for(var j:number = 0;j < objDic.values.length;j++){
+					var objAry:Array<gameobject.GameObject> = objDic.values[j];
+					if(objAry == null || objAry.length <= 0){
 						continue;
-					}
-					obj.dispose();
-					obj = null;					
-					this._curCacheObjNum -= 1;
-				}
-				objAry.splice(0,objAry.length);				
+					}					
+					for(var k:number = 0;k < objAry.length;k++){
+						var obj:gameobject.GameObject = objAry[k];
+						if(obj == null){
+							continue;
+						}
+						obj.dispose();
+						obj = null;
+						this._curCacheObjNum -= 1;						
+					}					
+					objAry.splice(0,objAry.length);
+				}				
 			}		
 
 			if(this._curCacheObjNum >= GameObjectFactory.MAX_CACHE_NUM)	{
@@ -107,20 +134,37 @@ module gameobject {
 
 		}
 
-		private findObjInPool(objType: number): gameobject.GameObject {
+		private findObjInPool(kindID:number,typeID:number,statusID:number): gameobject.GameObject {
 			var gameObj: gameobject.GameObject = null;
-			var gameFirstObjAry: Array<gameobject.GameObject> = this._objectFirstPoolMap.getValueByKey(objType);
+			var gameFirstObjDic:Dictionary = this._objectFirstPool.get(kindID);
 
-			var gameSecondObjAry: Array<gameobject.GameObject> = this._objectSecondPoolMap.getValueByKey(objType);
-			if ((gameSecondObjAry == null || gameSecondObjAry.length <= 0) && (
-				gameFirstObjAry == null || gameFirstObjAry.length <= 0)) {
+			var gameSecondObjDic: Dictionary = this._objectSecondPool.get(kindID);
+
+			if ((gameSecondObjDic == null || gameSecondObjDic.values.length <= 0) && (
+				gameFirstObjDic == null || gameFirstObjDic.values.length <= 0)) {
 				return null;
 			}
-			if(gameSecondObjAry != null && gameSecondObjAry.length > 0){
-				gameObj = gameSecondObjAry.shift();
+			var gameObjAry:Array<gameobject.GameObject> = null;
+
+			if(gameSecondObjDic != null && gameSecondObjDic.values.length > 0){
+				if(gameSecondObjDic.indexOf(typeID + "_" + statusID) != -1){					
+					gameObjAry = gameSecondObjDic.get(typeID + "_" + statusID);
+					if(gameObjAry != null && gameObjAry.length > 0){
+						gameObj = gameObjAry.shift();
+					}
+				}
+				if(gameObj == null){					
+					gameObjAry = gameFirstObjDic.get(typeID + "_" + statusID);
+					if(gameObjAry != null && gameObjAry.length > 0){
+						gameObj = gameObjAry.shift();
+					}
+				}
 			}
-			else if(gameFirstObjAry != null && gameFirstObjAry.length > 0){
-				gameObj = gameFirstObjAry.shift();
+			else if(gameFirstObjDic != null && gameFirstObjDic.values.length > 0){
+				gameObjAry = gameFirstObjDic.get(typeID + "_" + statusID);
+				if(gameObjAry != null && gameObjAry.length > 0){
+					gameObj = gameObjAry.shift();
+				}
 			}
 
 			if (gameObj == null) {

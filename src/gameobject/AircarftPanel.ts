@@ -6,9 +6,7 @@ module gameobject{
 	export class AircarftPanel extends GameObject{	
 		private _render:Sprite = null;
 		private _curDir:number = DIRECTION.UP;
-		private _kindID:number = -1;
-		private _typeID:number = -1;
-		private _statusID:number = -1;
+		
 		private _uID:number = -1;
 		private _bulletMgr:manager.BulletCreatorManager = null;
 		private _curTexture:laya.resource.Texture = null;
@@ -35,12 +33,7 @@ module gameobject{
 			return this._statusID;
 		}
 
-		public setData(data:any):void{
-			this._isSelf = data["isSelf"];	
-			this._kindID = data["kindID"];
-			this._typeID = data["typeID"];			
-			this._statusID = data["statusID"] != null ? data["statusID"] : 0;
-
+		public initialize():void{
 			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
 			this._kindID,this._typeID,this._statusID);
 

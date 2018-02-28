@@ -24,9 +24,8 @@ module manager{
 		}
 
 		public inintBattleLoagic():void{
-			// //初始化己方
-			var panelData = {isSelf:true,kindID:GAMEOBJ_TYPE.PANEL,typeID:0,statusID:0};
-			this._selfPanel = gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.PANEL,panelData);
+			// //初始化己方		
+			this._selfPanel = gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.PANEL,0,0,true);
 			this._selfPanel.pos((Laya.stage.width - 88) / 2 ,Laya.stage.height - 100);	
 			
 			manager.LayerManager.instance().addToLayer(this._selfPanel,LAYER.BATTLE);							
@@ -51,10 +50,9 @@ module manager{
 
 			for(var i:number = 0;i < panelNum;i++){
 				//随机产生0-5的随机数  这里是在确定资源的个数下产生的随机数
-				var randomTypeID:number = Math.ceil(Math.random() * 5);
-				var panelData:object = {isSelf:false,kindID:GAMEOBJ_TYPE.PANEL,typeID:randomTypeID + 100,statusID:0};
+				var randomTypeID:number = Math.ceil(Math.random() * 5);				
 				var panel:gameobject.AircarftPanel = gameobject.GameObjectFactory.
-				instance().createObject(GAMEOBJ_TYPE.PANEL,panelData);
+				instance().createObject(GAMEOBJ_TYPE.PANEL,randomTypeID + 100,0,false);
 
 				var addPosRandom:number = randomTypeID - 1 < 0 ? 0 : randomTypeID - 1;
 				var row:number = this._enemyPosAry[addPosRandom];

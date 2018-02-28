@@ -10,7 +10,7 @@ module manager{
 		private _kindID:number;
 		private _statusID:number;
 		private _isSelf:boolean;
-		private _data:object = null;		
+		private _varsData:object = null;		
 
 		constructor(host:gameobject.AircarftPanel){
 			if(host == null){
@@ -23,7 +23,7 @@ module manager{
 			this._isSelf = host.isSelf;
 			this._statusID = host.statusID;
 
-			this._data = {kindID:this._kindID,typeID:this._typeID,isSelf:this._isSelf,statusID:this._statusID};
+			this._varsData = host.varsData;
 
 			manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG,this._kindID,
 			laya.utils.Handler.create(this,this.startCreate));
@@ -35,7 +35,8 @@ module manager{
 
 		private create():void{
 			var bullet:gameobject.Bullet = 
-			gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.BULLET,this._data);
+			gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.BULLET,
+			this._typeID,this._statusID,this._isSelf,this._varsData);
 			
 			bullet.pos(this._host.x + this._host.width / 2,this._host.y - bullet.height / 2);			
 			manager.LayerManager.instance().addToLayer(bullet,LAYER.BATTLE);			
