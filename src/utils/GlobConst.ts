@@ -6,7 +6,7 @@ enum LAYER{
 }
 
 /**游戏物体类型 */
-enum GAMEOJB_TYPE{
+enum GAMEOBJ_TYPE{
     /**子弹 */
     BULLET,
     PANEL

@@ -20,8 +20,9 @@ var gameobject;
             var _this = _super.call(this) || this;
             _this._render = null;
             _this._curDir = DIRECTION.UP;
-            _this._attrID = -1;
+            _this._kindID = -1;
             _this._typeID = -1;
+            _this._statusID = -1;
             _this._uID = -1;
             _this._bulletMgr = null;
             _this._curTexture = null;
@@ -36,9 +37,9 @@ var gameobject;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(AircarftPanel.prototype, "attrID", {
+        Object.defineProperty(AircarftPanel.prototype, "kindID", {
             get: function () {
-                return this._attrID;
+                return this._kindID;
             },
             enumerable: true,
             configurable: true
@@ -50,20 +51,28 @@ var gameobject;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(AircarftPanel.prototype, "statusID", {
+            get: function () {
+                return this._statusID;
+            },
+            enumerable: true,
+            configurable: true
+        });
         AircarftPanel.prototype.setData = function (data) {
             this._isSelf = data["isSelf"];
-            this._attrID = data["attrID"];
+            this._kindID = data["kindID"];
             this._typeID = data["typeID"];
-            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            this._statusID = data["statusID"] != null ? data["statusID"] : 0;
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             if (tex == null) {
-                manager.AtlasResourceManager.Instance.loadAtlas(manager.AtlasResourceManager.AIRCRAFT_PANEL, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
+                manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG, this._kindID, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
             }
             else {
                 this.setRenderTexture(tex);
             }
         };
         AircarftPanel.prototype.onLoadAtlasComplete = function () {
-            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, AircarftPanel.ATTR_NAME, this._attrID, this._typeID);
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             this.setRenderTexture(tex);
         };
         AircarftPanel.prototype.setRenderTexture = function (texture) {
@@ -96,7 +105,6 @@ var gameobject;
                 this._bulletMgr.dispose();
             }
         };
-        AircarftPanel.ATTR_NAME = "panel";
         return AircarftPanel;
     }(gameobject.GameObject));
     gameobject.AircarftPanel = AircarftPanel;

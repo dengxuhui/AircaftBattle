@@ -32,12 +32,12 @@ var manager;
             return this._instance;
         };
         BattleLogicManager.prototype.inintBattleLoagic = function () {
-            //初始化己方
-            var panelData = { isSelf: true, attrID: 0, typeID: 0 };
-            this._selfPanel = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.PANEL, panelData);
+            // //初始化己方
+            var panelData = { isSelf: true, kindID: GAMEOBJ_TYPE.PANEL, typeID: 0, statusID: 0 };
+            this._selfPanel = gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.PANEL, panelData);
             this._selfPanel.pos((Laya.stage.width - 88) / 2, Laya.stage.height - 100);
             manager.LayerManager.instance().addToLayer(this._selfPanel, LAYER.BATTLE);
-            //计时器初始化敌军
+            // //计时器初始化敌军
             Laya.timer.loop(100, this, this.createEnemyPanel);
         };
         /**随机创建1-3个敌军，并随机分布在屏幕0-屏幕宽度 位置 */
@@ -56,14 +56,15 @@ var manager;
             for (var i = 0; i < panelNum; i++) {
                 //随机产生0-5的随机数  这里是在确定资源的个数下产生的随机数
                 var randomTypeID = Math.ceil(Math.random() * 5);
-                var panelData = { isSelf: false, attrID: 1, typeID: randomTypeID };
+                var panelData = { isSelf: false, kindID: GAMEOBJ_TYPE.PANEL, typeID: randomTypeID + 100, statusID: 0 };
                 var panel = gameobject.GameObjectFactory.
-                    instance().createObject(GAMEOJB_TYPE.PANEL, panelData);
+                    instance().createObject(GAMEOBJ_TYPE.PANEL, panelData);
                 var addPosRandom = randomTypeID - 1 < 0 ? 0 : randomTypeID - 1;
                 var row = this._enemyPosAry[addPosRandom];
                 panel.pos(Laya.stage.width / 5 * addPosRandom, -panel.height - row * panel.height);
                 this._enemyPosAry[addPosRandom] = row + 1;
                 manager.LayerManager.instance().addToLayer(panel, LAYER.BATTLE);
+                // panel.getBounds().intersection()
             }
             this.resetEnemyPosAry();
         };

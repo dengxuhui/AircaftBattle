@@ -4,6 +4,8 @@
 module gameobject{
 	import Sprite = Laya.Sprite;
 	export class GameObject extends Sprite{
+		public static ATLAS_FLAG:string = "gameobject";
+
 		/**是否是自己 如果不是自己飞行方向会反向 */
 		protected _isSelf:boolean = false;				
 		protected _canCache:boolean = false;

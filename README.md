@@ -6,9 +6,13 @@
 
 2.Master存储所有玩家数据，存在localStorage中
 
-3.图集管理器需要所管理的图集命名规范按照如下进行： 图集中只存.png格式图片
-    属性名 _+ 属性id _ + _ + type _ +typeID     ex：enemy_10_type_0
-
+3.资源命名规则：
+    $对象标识符_$种类ID_$类型ID_$状态ID
+    对应到gameobject所加载资源对象命名为：
+        （1）$对象标识符 = gameobejct
+        （2）$种类ID 为全局枚举中 GAMEOBJ_TYPE中的值 每张图集根据id对应的分类
+        （3）$类型ID 例如各个类型的战机
+        （4）$状态ID 例如为一种战机不同形态
 4.BulletCreatorManager控制子弹实例化，并控制子弹实例化间隙
 
 5.游戏物体工厂 GameObjectFactory使用二级缓存，第一次释放直接放置在一级缓存，从缓存中取先取二级缓存中游戏物体，没有再从一级缓存中取

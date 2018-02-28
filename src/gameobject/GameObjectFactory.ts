@@ -18,8 +18,8 @@ module gameobject {
 			this._objectFirstPoolMap = new Map();
 			this._objectSecondPoolMap = new Map();
 			this._objClassDic = new Dictionary();
-			this._objClassDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
-			this._objClassDic.set(GAMEOJB_TYPE.PANEL,gameobject.AircarftPanel);
+			this._objClassDic.set(GAMEOBJ_TYPE.BULLET, gameobject.Bullet);
+			this._objClassDic.set(GAMEOBJ_TYPE.PANEL,gameobject.AircarftPanel);
 		}
 
 		public static instance(): GameObjectFactory {
@@ -52,8 +52,7 @@ module gameobject {
 
 			if(obj.refCount > 0){//被从资源池重复利用过
 				var secondObjAry:Array<gameobject.GameObject> = this._objectSecondPoolMap.getValueByKey(objType);
-				if(secondObjAry == null){
-					// console.assert(false,"野资源");
+				if(secondObjAry == null){					
 					secondObjAry = new Array<gameobject.GameObject>();
 					this._objectSecondPoolMap.addValue(objType,secondObjAry);
 				}

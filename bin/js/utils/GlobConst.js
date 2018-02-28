@@ -6,12 +6,12 @@ var LAYER;
     LAYER[LAYER["POP"] = 3] = "POP";
 })(LAYER || (LAYER = {}));
 /**游戏物体类型 */
-var GAMEOJB_TYPE;
-(function (GAMEOJB_TYPE) {
+var GAMEOBJ_TYPE;
+(function (GAMEOBJ_TYPE) {
     /**子弹 */
-    GAMEOJB_TYPE[GAMEOJB_TYPE["BULLET"] = 0] = "BULLET";
-    GAMEOJB_TYPE[GAMEOJB_TYPE["PANEL"] = 1] = "PANEL";
-})(GAMEOJB_TYPE || (GAMEOJB_TYPE = {}));
+    GAMEOBJ_TYPE[GAMEOBJ_TYPE["BULLET"] = 0] = "BULLET";
+    GAMEOBJ_TYPE[GAMEOBJ_TYPE["PANEL"] = 1] = "PANEL";
+})(GAMEOBJ_TYPE || (GAMEOBJ_TYPE = {}));
 /**子弹类型 */
 var GAMEOBJECT_BULLET;
 (function (GAMEOBJECT_BULLET) {

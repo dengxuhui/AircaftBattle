@@ -26,8 +26,8 @@ var gameobject;
             _this._objectFirstPoolMap = new Map();
             _this._objectSecondPoolMap = new Map();
             _this._objClassDic = new Dictionary();
-            _this._objClassDic.set(GAMEOJB_TYPE.BULLET, gameobject.Bullet);
-            _this._objClassDic.set(GAMEOJB_TYPE.PANEL, gameobject.AircarftPanel);
+            _this._objClassDic.set(GAMEOBJ_TYPE.BULLET, gameobject.Bullet);
+            _this._objClassDic.set(GAMEOBJ_TYPE.PANEL, gameobject.AircarftPanel);
             return _this;
         }
         GameObjectFactory.instance = function () {
@@ -59,7 +59,6 @@ var gameobject;
             if (obj.refCount > 0) {
                 var secondObjAry = this._objectSecondPoolMap.getValueByKey(objType);
                 if (secondObjAry == null) {
-                    // console.assert(false,"野资源");
                     secondObjAry = new Array();
                     this._objectSecondPoolMap.addValue(objType, secondObjAry);
                 }

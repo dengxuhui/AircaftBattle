@@ -3,13 +3,12 @@
 */
 module gameobject{
 	import Sprite = laya.display.Sprite;
-	export class AircarftPanel extends GameObject{
-		private static ATTR_NAME:string = "panel";
-
+	export class AircarftPanel extends GameObject{	
 		private _render:Sprite = null;
 		private _curDir:number = DIRECTION.UP;
-		private _attrID:number = -1;
+		private _kindID:number = -1;
 		private _typeID:number = -1;
+		private _statusID:number = -1;
 		private _uID:number = -1;
 		private _bulletMgr:manager.BulletCreatorManager = null;
 		private _curTexture:laya.resource.Texture = null;
@@ -24,24 +23,30 @@ module gameobject{
 			return this._typeID;
 		}
 
-		public get attrID():number{
-			return this._attrID;
+		public get kindID():number{
+			return this._kindID;
 		}
 
 		public get isSelf():boolean{
 			return this._isSelf;
 		}
 
+		public get statusID():number{
+			return this._statusID;
+		}
+
 		public setData(data:any):void{
 			this._isSelf = data["isSelf"];	
-			this._attrID = data["attrID"];
-			this._typeID = data["typeID"];
+			this._kindID = data["kindID"];
+			this._typeID = data["typeID"];			
+			this._statusID = data["statusID"] != null ? data["statusID"] : 0;
 
-			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
+			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
+			this._kindID,this._typeID,this._statusID);
+
 			if(tex == null){
 				manager.AtlasResourceManager.Instance.loadAtlas(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,
+				gameobject.GameObject.ATLAS_FLAG,this._kindID,
 				laya.utils.Handler.create(this,this.onLoadAtlasComplete));
 			}
 			else{
@@ -50,8 +55,8 @@ module gameobject{
 		}
 
 		private onLoadAtlasComplete():void{
-			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,AircarftPanel.ATTR_NAME,this._attrID,this._typeID);
+			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
+			this._kindID,this._typeID,this._statusID);
 			this.setRenderTexture(tex);					
 		}
 

@@ -19,9 +19,9 @@ var manager;
             configurable: true
         });
         /**加载图集 */
-        AtlasResourceManager.prototype.loadAtlas = function (atlasType, onComplete) {
+        AtlasResourceManager.prototype.loadAtlas = function (flagName, kindID, onComplete) {
             if (onComplete === void 0) { onComplete = null; }
-            var url = "res/atlas/" + atlasType + ".atlas";
+            var url = "res/atlas/" + flagName + "_" + kindID + ".atlas";
             //TODO 更改为正则表达式			
             var atlasNameAry = url.split(".")[0].split("/");
             var atlasName = atlasNameAry[atlasNameAry.length - 1];
@@ -34,18 +34,18 @@ var manager;
                 }
             }
         };
-        AtlasResourceManager.prototype.tryGetTexture = function (atlasName, attrName, attrID, typeID) {
+        AtlasResourceManager.prototype.tryGetTexture = function (flagName, kindID, typeID, statusID) {
+            if (statusID === void 0) { statusID = 0; }
             var tex = null;
-            if (this._curLoadAtlasDic.indexOf(atlasName) == -1) {
-                console.log("请先加载：" + atlasName + "资源");
+            if (this._curLoadAtlasDic.indexOf(flagName + "_" + kindID) == -1) {
                 return null;
             }
-            var urlAry = Laya.Loader.getAtlas("res/atlas/" + atlasName + ".atlas");
+            var urlAry = Laya.Loader.getAtlas("res/atlas/" + flagName + "_" + kindID + ".atlas");
             if (urlAry.length <= 0) {
                 console.assert(false, "图集url输入错误");
                 return null;
             }
-            var texUrl = attrName + "_" + attrID + "_" + "type_" + typeID;
+            var texUrl = flagName + "_" + kindID + "_" + typeID + "_" + statusID;
             for (var i = 0; i < urlAry.length; i++) {
                 var url = urlAry[i];
                 if (url.indexOf(texUrl) != -1) {
@@ -64,8 +64,6 @@ var manager;
             }
         };
         AtlasResourceManager._instance = null;
-        AtlasResourceManager.AIRCRAFT_PANEL = "aircraftPanel";
-        AtlasResourceManager.BULLET = "bullet";
         return AtlasResourceManager;
     }());
     manager.AtlasResourceManager = AtlasResourceManager;

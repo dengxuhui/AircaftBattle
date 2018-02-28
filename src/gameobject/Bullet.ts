@@ -8,8 +8,9 @@ module gameobject{
 		private static BULLET:string = "bullet";
 		/**渲染对象 */
 		private _render:Sprite = null;
-		private _attrID:number;
-		private _typeID:number;		
+		private _kindID:number;
+		private _typeID:number;	
+		private _statusID:number;	
 		private _curTexture:laya.resource.Texture = null;
 
 		constructor(){
@@ -19,15 +20,16 @@ module gameobject{
 		}
 
 		public setData(data:any):void{
-			this._attrID = data["attrID"];
+			this._kindID = data["kindID"];
 			this._typeID = data["typeID"];
 			this._isSelf = data["isSelf"];
+			this._statusID = data["statusID"];
 
-			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
-				manager.AtlasResourceManager.BULLET,Bullet.BULLET,this._attrID,this._typeID);
+			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
+			this._kindID,this._typeID,this._statusID);
 			if(tex == null){
 				manager.AtlasResourceManager.Instance.loadAtlas(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,
+				gameobject.GameObject.ATLAS_FLAG,this._kindID,
 				laya.utils.Handler.create(this,this.onLoadAtlasComplete));
 			}
 			else{
@@ -36,8 +38,8 @@ module gameobject{
 		}
 
 		private onLoadAtlasComplete():void{
-			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(
-				manager.AtlasResourceManager.AIRCRAFT_PANEL,Bullet.BULLET,this._attrID,this._typeID);
+			var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG,
+			this._kindID,this._typeID,this._statusID);
 			this.setRenderTexture(tex);
 		}
 
@@ -61,7 +63,7 @@ module gameobject{
 						this.parent.removeChild(this);
 					}
 					Laya.timer.clear(this,this.update);
-					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOJB_TYPE.BULLET);					
+					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOBJ_TYPE.BULLET);					
 				}
 				else{
 					this.y -= Bullet.MOVE_SPEED;
@@ -73,7 +75,7 @@ module gameobject{
 						this.parent.removeChild(this);
 					}
 					Laya.timer.clear(this,this.update);
-					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOJB_TYPE.BULLET);
+					gameobject.GameObjectFactory.instance().disposeObj(this,GAMEOBJ_TYPE.BULLET);
 				}
 				else{
 					this.y += Bullet.MOVE_SPEED;

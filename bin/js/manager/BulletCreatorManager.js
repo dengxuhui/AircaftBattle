@@ -13,17 +13,18 @@ var manager;
                 return;
             }
             this._host = host;
-            this._bulletAttr = host.attrID;
-            this._bulletType = host.typeID;
+            this._kindID = GAMEOBJ_TYPE.BULLET;
+            this._typeID = host.typeID;
             this._isSelf = host.isSelf;
-            this._data = { attrID: this._bulletAttr, typeID: this._bulletType, isSelf: this._isSelf };
-            manager.AtlasResourceManager.Instance.loadAtlas(manager.AtlasResourceManager.BULLET, laya.utils.Handler.create(this, this.startCreate));
+            this._statusID = host.statusID;
+            this._data = { kindID: this._kindID, typeID: this._typeID, isSelf: this._isSelf, statusID: this._statusID };
+            manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG, this._kindID, laya.utils.Handler.create(this, this.startCreate));
         }
         BulletCreatorManager.prototype.startCreate = function () {
             Laya.timer.loop(250, this, this.create);
         };
         BulletCreatorManager.prototype.create = function () {
-            var bullet = gameobject.GameObjectFactory.instance().createObject(GAMEOJB_TYPE.BULLET, this._data);
+            var bullet = gameobject.GameObjectFactory.instance().createObject(GAMEOBJ_TYPE.BULLET, this._data);
             bullet.pos(this._host.x + this._host.width / 2, this._host.y - bullet.height / 2);
             manager.LayerManager.instance().addToLayer(bullet, LAYER.BATTLE);
         };

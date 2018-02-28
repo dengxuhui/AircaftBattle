@@ -7,9 +7,6 @@ module manager{
 		private static _instance:AtlasResourceManager = null;
 		private _curLoadAtlasDic:Dictionary = new Dictionary();
 
-		public static AIRCRAFT_PANEL:string = "aircraftPanel";
-		public static BULLET:string = "bullet";
-
 		constructor(){
 
 		}
@@ -23,8 +20,8 @@ module manager{
 		}
 
 		/**加载图集 */
-		public loadAtlas(atlasType:string,onComplete:laya.utils.Handler = null):void{
-			var url = "res/atlas/" + atlasType + ".atlas";
+		public loadAtlas(flagName:string,kindID:number,onComplete:laya.utils.Handler = null):void{
+			var url = "res/atlas/" + flagName + "_" + kindID + ".atlas";
 			//TODO 更改为正则表达式			
 			var atlasNameAry:string[] = url.split(".")[0].split("/");
 			var atlasName:string = atlasNameAry[atlasNameAry.length - 1];
@@ -39,18 +36,17 @@ module manager{
 			}
 		}
 
-		public tryGetTexture(atlasName:string,attrName:string,attrID:number,typeID:number):Texture{
+		public tryGetTexture(flagName:string,kindID:number,typeID:number,statusID:number = 0):Texture{
 			var tex:Texture = null;
-			if(this._curLoadAtlasDic.indexOf(atlasName) == -1){
-				console.log("请先加载：" + atlasName + "资源");
+			if(this._curLoadAtlasDic.indexOf(flagName + "_" + kindID) == -1){				
 				return null;
 			}
-			var urlAry = Laya.Loader.getAtlas("res/atlas/" + atlasName + ".atlas");
+			var urlAry = Laya.Loader.getAtlas("res/atlas/" + flagName + "_" + kindID + ".atlas");
 			if(urlAry.length <= 0){
 				console.assert(false,"图集url输入错误");
 				return null;
 			}
-			var texUrl:string = attrName + "_" + attrID + "_" + "type_" + typeID;
+			var texUrl:string = flagName + "_" + kindID + "_" + typeID + "_" + statusID;
 			for(var i:number = 0;i < urlAry.length;i++){
 				var url = urlAry[i];
 				if(url.indexOf(texUrl) != -1){

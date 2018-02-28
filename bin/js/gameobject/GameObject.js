@@ -69,6 +69,7 @@ var gameobject;
             enumerable: true,
             configurable: true
         });
+        GameObject.ATLAS_FLAG = "gameobject";
         return GameObject;
     }(Sprite));
     gameobject.GameObject = GameObject;

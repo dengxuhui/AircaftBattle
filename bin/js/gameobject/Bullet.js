@@ -26,19 +26,20 @@ var gameobject;
             return _this;
         }
         Bullet.prototype.setData = function (data) {
-            this._attrID = data["attrID"];
+            this._kindID = data["kindID"];
             this._typeID = data["typeID"];
             this._isSelf = data["isSelf"];
-            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.BULLET, Bullet.BULLET, this._attrID, this._typeID);
+            this._statusID = data["statusID"];
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             if (tex == null) {
-                manager.AtlasResourceManager.Instance.loadAtlas(manager.AtlasResourceManager.AIRCRAFT_PANEL, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
+                manager.AtlasResourceManager.Instance.loadAtlas(gameobject.GameObject.ATLAS_FLAG, this._kindID, laya.utils.Handler.create(this, this.onLoadAtlasComplete));
             }
             else {
                 this.setRenderTexture(tex);
             }
         };
         Bullet.prototype.onLoadAtlasComplete = function () {
-            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(manager.AtlasResourceManager.AIRCRAFT_PANEL, Bullet.BULLET, this._attrID, this._typeID);
+            var tex = manager.AtlasResourceManager.Instance.tryGetTexture(gameobject.GameObject.ATLAS_FLAG, this._kindID, this._typeID, this._statusID);
             this.setRenderTexture(tex);
         };
         Bullet.prototype.setRenderTexture = function (texture) {
@@ -60,7 +61,7 @@ var gameobject;
                         this.parent.removeChild(this);
                     }
                     Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOJB_TYPE.BULLET);
+                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOBJ_TYPE.BULLET);
                 }
                 else {
                     this.y -= Bullet.MOVE_SPEED;
@@ -72,7 +73,7 @@ var gameobject;
                         this.parent.removeChild(this);
                     }
                     Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOJB_TYPE.BULLET);
+                    gameobject.GameObjectFactory.instance().disposeObj(this, GAMEOBJ_TYPE.BULLET);
                 }
                 else {
                     this.y += Bullet.MOVE_SPEED;
