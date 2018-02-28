@@ -93,6 +93,9 @@ var gameobject;
                 }
             }
             this._curCacheObjNum += 1;
+            if (obj.parent != null) {
+                console.log("未删除");
+            }
             if (this._curCacheObjNum >= GameObjectFactory.MAX_CACHE_NUM) {
                 this.cleanCachePool();
             }

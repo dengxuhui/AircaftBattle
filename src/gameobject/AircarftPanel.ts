@@ -61,6 +61,7 @@ module gameobject{
 			if(this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)){
 				this._render.graphics.drawTexture(texture);
 				this.size(texture.width,texture.height);	
+				this._curTexture = texture;
 			}			
 			
 			if(this._isSelf){
@@ -69,7 +70,7 @@ module gameobject{
 			else{
 				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
 			}
-			this._bulletMgr = new manager.BulletCreatorManager(this);				
+			// this._bulletMgr = new manager.BulletCreatorManager(this);				
 		}
 
 		public get uID():number{

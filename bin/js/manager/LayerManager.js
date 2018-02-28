@@ -32,6 +32,10 @@ var manager;
             }
             return this._instance;
         };
+        /**标记：临时接口  测试用 */
+        LayerManager.prototype.getLayer = function (layerType) {
+            return this._layerMap.getValueByKey(layerType);
+        };
         LayerManager.prototype.addToLayer = function (source, layerType) {
             if (this._layerMap == null) {
                 return;

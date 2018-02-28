@@ -19,8 +19,6 @@ var manager;
             var _this = _super.call(this) || this;
             /**己方战机 */
             _this._selfPanel = null;
-            /**敌机 */
-            _this._enemyPanels = new Map();
             /**战机随机实例位置 */
             _this._enemyPosAry = [0, 0, 0, 0, 0];
             return _this;
@@ -37,7 +35,7 @@ var manager;
             this._selfPanel.pos((Laya.stage.width - 88) / 2, Laya.stage.height - 100);
             manager.LayerManager.instance().addToLayer(this._selfPanel, LAYER.BATTLE);
             // //计时器初始化敌军
-            Laya.timer.loop(100, this, this.createEnemyPanel);
+            Laya.timer.loop(400, this, this.createEnemyPanel);
         };
         /**随机创建1-3个敌军，并随机分布在屏幕0-屏幕宽度 位置 */
         BattleLogicManager.prototype.createEnemyPanel = function () {
@@ -69,10 +67,10 @@ var manager;
         BattleLogicManager.prototype.resetEnemyPosAry = function () {
             if (this._enemyPosAry != null) {
                 for (var i = 0; i < this._enemyPosAry.length; i++) {
-                    if (this._enemyPanels[i] == 0) {
+                    if (this._enemyPosAry[i] == 0) {
                         continue;
                     }
-                    this._enemyPanels[i] = 0;
+                    this._enemyPosAry[i] = 0;
                 }
             }
         };

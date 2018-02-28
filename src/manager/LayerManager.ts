@@ -37,6 +37,11 @@ module manager{
 			return this._instance;
 		}
 
+		/**标记：临时接口  测试用 */
+		public getLayer(layerType:number):Sprite{
+			return this._layerMap.getValueByKey(layerType);
+		}
+
 		public addToLayer(source:Sprite,layerType:number):void{
 			if(this._layerMap == null){
 				return;

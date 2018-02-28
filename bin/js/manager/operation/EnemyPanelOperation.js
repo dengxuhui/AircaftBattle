@@ -28,18 +28,21 @@ var operation;
         };
         EnemyPanelOperation.prototype.update = function () {
             if (this._enemy.y > Laya.stage.height) {
-                if (this._enemy.parent != null) {
-                    this._enemy.parent.removeChild(this._enemy);
-                }
                 Laya.timer.clear(this, this.update);
+                if (this._enemy.parent != null) {
+                    manager.LayerManager.instance().removeFromLayer(this._enemy, LAYER.BATTLE);
+                }
                 gameobject.GameObjectFactory.instance().disposeObj(this._enemy);
+                this.unregister();
             }
             else {
                 this._enemy.y += EnemyPanelOperation.ENEMY_FLY_SPEED;
             }
         };
         EnemyPanelOperation.prototype.unregister = function () {
+            _super.prototype.unregister.call(this);
             Laya.timer.clear(this, this.update);
+            this._enemy = null;
         };
         EnemyPanelOperation.ENEMY_FLY_SPEED = 5;
         return EnemyPanelOperation;

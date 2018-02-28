@@ -76,6 +76,7 @@ var gameobject;
             if (this._curTexture == null || (this._curTexture != null && this._curTexture.url != texture.url)) {
                 this._render.graphics.drawTexture(texture);
                 this.size(texture.width, texture.height);
+                this._curTexture = texture;
             }
             if (this._isSelf) {
                 this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
@@ -83,7 +84,7 @@ var gameobject;
             else {
                 this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
             }
-            this._bulletMgr = new manager.BulletCreatorManager(this);
+            // this._bulletMgr = new manager.BulletCreatorManager(this);				
         };
         Object.defineProperty(AircarftPanel.prototype, "uID", {
             get: function () {

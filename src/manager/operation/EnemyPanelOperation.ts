@@ -19,11 +19,12 @@ module operation{
 
 		private update():void{
 			if(this._enemy.y > Laya.stage.height){
-				if(this._enemy.parent != null){
-					this._enemy.parent.removeChild(this._enemy);
-				}
 				Laya.timer.clear(this,this.update);
-				gameobject.GameObjectFactory.instance().disposeObj(this._enemy);
+				if(this._enemy.parent != null){
+					manager.LayerManager.instance().removeFromLayer(this._enemy,LAYER.BATTLE);					
+				}				
+				gameobject.GameObjectFactory.instance().disposeObj(this._enemy);		
+				this.unregister();		
 			}
 			else{
 				this._enemy.y += EnemyPanelOperation.ENEMY_FLY_SPEED;
@@ -31,7 +32,10 @@ module operation{
 		}
 
 		public unregister():void{
+			super.unregister();
+			
 			Laya.timer.clear(this,this.update);
+			this._enemy = null;
 		}
 	}
 }

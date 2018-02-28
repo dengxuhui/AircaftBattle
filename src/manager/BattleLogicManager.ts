@@ -6,9 +6,7 @@ module manager{
 
 		private static _instance:BattleLogicManager = null;
 		/**己方战机 */
-		private _selfPanel:gameobject.AircarftPanel = null;		
-		/**敌机 */
-		private _enemyPanels:Map = new Map();
+		private _selfPanel:gameobject.AircarftPanel = null;				
 		/**战机随机实例位置 */
 		private _enemyPosAry:Array<number> = [0,0,0,0,0];
 
@@ -31,7 +29,7 @@ module manager{
 			manager.LayerManager.instance().addToLayer(this._selfPanel,LAYER.BATTLE);							
 
 			// //计时器初始化敌军
-			Laya.timer.loop(100,this,this.createEnemyPanel);
+			Laya.timer.loop(400,this,this.createEnemyPanel);
 		}
 
 		/**随机创建1-3个敌军，并随机分布在屏幕0-屏幕宽度 位置 */
@@ -68,10 +66,10 @@ module manager{
 		private resetEnemyPosAry():void{
 			if(this._enemyPosAry != null){
 				for(var i:number = 0;i < this._enemyPosAry.length;i++){
-					if(this._enemyPanels[i] == 0){
+					if(this._enemyPosAry[i] == 0){
 						continue;
 					}
-					this._enemyPanels[i] = 0;
+					this._enemyPosAry[i] = 0;
 				}
 			}
 		}
