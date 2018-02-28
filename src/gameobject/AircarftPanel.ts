@@ -3,7 +3,7 @@
 */
 module gameobject{
 	import Sprite = laya.display.Sprite;
-	export class AircarftPanel extends GameObject{	
+	export class AircarftPanel extends GameObject{			
 		private _render:Sprite = null;
 		private _curDir:number = DIRECTION.UP;
 		
@@ -69,7 +69,7 @@ module gameobject{
 			else{
 				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
 			}
-			this._bulletMgr = new manager.BulletCreatorManager(this);			
+			this._bulletMgr = new manager.BulletCreatorManager(this);				
 		}
 
 		public get uID():number{
