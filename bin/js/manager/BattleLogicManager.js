@@ -21,6 +21,7 @@ var manager;
             _this._selfPanel = null;
             /**战机随机实例位置 */
             _this._enemyPosAry = [0, 0, 0, 0, 0];
+            _this._allEnemys = new Dictionary();
             return _this;
         }
         BattleLogicManager.instance = function () {
@@ -28,6 +29,20 @@ var manager;
                 this._instance = new BattleLogicManager();
             }
             return this._instance;
+        };
+        Object.defineProperty(BattleLogicManager.prototype, "allEnemys", {
+            get: function () {
+                return this._allEnemys;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BattleLogicManager.prototype.setEnemyHurt = function (key) {
+            var enemy = this._allEnemys.get(key);
+            if (enemy == null) {
+                return;
+            }
+            this.event(BattleLogicManager.ENEMY_ON_DESTORY, enemy);
         };
         BattleLogicManager.prototype.inintBattleLoagic = function () {
             // //初始化己方		
@@ -60,7 +75,7 @@ var manager;
                 panel.pos(Laya.stage.width / 5 * addPosRandom, -panel.height - row * panel.height);
                 this._enemyPosAry[addPosRandom] = row + 1;
                 manager.LayerManager.instance().addToLayer(panel, LAYER.BATTLE);
-                // panel.getBounds().intersection()
+                this._allEnemys.set(panel.uID, panel);
             }
             this.resetEnemyPosAry();
         };
@@ -77,6 +92,7 @@ var manager;
         BattleLogicManager.prototype.uninitBattleLogic = function () {
             Laya.timer.clear(this, this.createEnemyPanel);
         };
+        BattleLogicManager.ENEMY_ON_DESTORY = "enemy_on_destory";
         BattleLogicManager._instance = null;
         return BattleLogicManager;
     }(laya.events.EventDispatcher));

@@ -20,7 +20,7 @@ var gameobject;
             var _this = _super.call(this) || this;
             _this._render = null;
             _this._curDir = DIRECTION.UP;
-            _this._uID = -1;
+            _this._operationID = -1;
             _this._bulletMgr = null;
             _this._curTexture = null;
             _this._render = new Sprite();
@@ -79,22 +79,22 @@ var gameobject;
                 this._curTexture = texture;
             }
             if (this._isSelf) {
-                this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
+                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.MASTER_PANEL);
+                this._bulletMgr = new manager.BulletCreatorManager(this);
             }
             else {
-                this._uID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
+                this._operationID = manager.OperationManager.Instance.registerOperation(this, OPERATION_TYPE.ENEMY_PANEL);
             }
-            // this._bulletMgr = new manager.BulletCreatorManager(this);				
         };
-        Object.defineProperty(AircarftPanel.prototype, "uID", {
+        Object.defineProperty(AircarftPanel.prototype, "operationID", {
             get: function () {
-                return this._uID;
+                return this._operationID;
             },
             enumerable: true,
             configurable: true
         });
         AircarftPanel.prototype.dispose = function () {
-            manager.OperationManager.Instance.unregisterOperation(this._uID);
+            manager.OperationManager.Instance.unregisterOperation(this._operationID);
             if (this._bulletMgr != null) {
                 this._bulletMgr.dispose();
             }

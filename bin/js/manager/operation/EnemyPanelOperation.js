@@ -24,15 +24,26 @@ var operation;
             this._enemy = source;
             if (this._enemy != null) {
                 Laya.timer.frameLoop(1, this, this.update);
+                manager.BattleLogicManager.instance().on(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onEnemyDestory);
             }
+        };
+        EnemyPanelOperation.prototype.onEnemyDestory = function (panel) {
+            if (panel.uID == this._enemy.uID) {
+                Laya.timer.clear(this, this.update);
+                this.destroy();
+                this.unregister();
+            }
+        };
+        EnemyPanelOperation.prototype.destroy = function () {
+            if (this._enemy.parent != null) {
+                manager.LayerManager.instance().removeFromLayer(this._enemy, LAYER.BATTLE);
+            }
+            gameobject.GameObjectFactory.instance().disposeObj(this._enemy);
         };
         EnemyPanelOperation.prototype.update = function () {
             if (this._enemy.y > Laya.stage.height) {
                 Laya.timer.clear(this, this.update);
-                if (this._enemy.parent != null) {
-                    manager.LayerManager.instance().removeFromLayer(this._enemy, LAYER.BATTLE);
-                }
-                gameobject.GameObjectFactory.instance().disposeObj(this._enemy);
+                this.destroy();
                 this.unregister();
             }
             else {
@@ -41,6 +52,7 @@ var operation;
         };
         EnemyPanelOperation.prototype.unregister = function () {
             _super.prototype.unregister.call(this);
+            manager.BattleLogicManager.instance().off(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onEnemyDestory);
             Laya.timer.clear(this, this.update);
             this._enemy = null;
         };

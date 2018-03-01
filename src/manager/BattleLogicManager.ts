@@ -4,11 +4,14 @@
 module manager{
 	export class BattleLogicManager extends laya.events.EventDispatcher{
 
+		public static ENEMY_ON_DESTORY:string = "enemy_on_destory";
 		private static _instance:BattleLogicManager = null;
 		/**己方战机 */
 		private _selfPanel:gameobject.AircarftPanel = null;				
 		/**战机随机实例位置 */
 		private _enemyPosAry:Array<number> = [0,0,0,0,0];
+
+		private _allEnemys:Dictionary = new Dictionary();			
 
 		constructor(){
 			super();
@@ -19,6 +22,18 @@ module manager{
 				this._instance = new BattleLogicManager();
 			}
 			return this._instance;
+		}
+
+		public get allEnemys():Dictionary{
+			return this._allEnemys;
+		}
+
+		public setEnemyHurt(key:any):void{
+			var enemy:gameobject.AircarftPanel = this._allEnemys.get(key);
+			if(enemy == null){
+				return;
+			}
+			this.event(BattleLogicManager.ENEMY_ON_DESTORY,enemy);
 		}
 
 		public inintBattleLoagic():void{
@@ -57,7 +72,8 @@ module manager{
 				panel.pos(Laya.stage.width / 5 * addPosRandom,-panel.height - row * panel.height);
 				this._enemyPosAry[addPosRandom] = row + 1;
 				manager.LayerManager.instance().addToLayer(panel,LAYER.BATTLE);
-				// panel.getBounds().intersection()
+				
+				this._allEnemys.set(panel.uID,panel);
 			}
 
 			this.resetEnemyPosAry();

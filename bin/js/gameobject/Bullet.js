@@ -53,26 +53,40 @@ var gameobject;
         Bullet.prototype.update = function () {
             if (this._isSelf) {
                 if (this.y < 0) {
-                    if (this.parent != null) {
-                        this.parent.removeChild(this);
-                    }
-                    Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this);
+                    this.destorySelf();
                 }
                 else {
                     this.y -= Bullet.MOVE_SPEED;
+                    this.checkHit();
                 }
             }
             else {
                 if (this.y > Laya.stage.height) {
-                    if (this.parent != null) {
-                        this.parent.removeChild(this);
-                    }
-                    Laya.timer.clear(this, this.update);
-                    gameobject.GameObjectFactory.instance().disposeObj(this);
+                    this.destorySelf();
                 }
                 else {
                     this.y += Bullet.MOVE_SPEED;
+                }
+            }
+        };
+        Bullet.prototype.destorySelf = function () {
+            if (this.parent != null) {
+                this.parent.removeChild(this);
+            }
+            Laya.timer.clear(this, this.update);
+            gameobject.GameObjectFactory.instance().disposeObj(this);
+        };
+        Bullet.prototype.checkHit = function () {
+            var enemys = manager.BattleLogicManager.instance().allEnemys;
+            if (enemys == null || enemys.values.length <= 0) {
+                return;
+            }
+            for (var i = 0; i < enemys.values.length; i++) {
+                var enemy = enemys.values[i];
+                if (this.getBounds().intersects(enemy.getBounds())) {
+                    manager.BattleLogicManager.instance().setEnemyHurt(enemys.keys[i]);
+                    this.destorySelf();
+                    return;
                 }
             }
         };

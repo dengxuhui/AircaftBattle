@@ -7,7 +7,7 @@ module gameobject{
 		private _render:Sprite = null;
 		private _curDir:number = DIRECTION.UP;
 		
-		private _uID:number = -1;
+		private _operationID:number = -1;
 		private _bulletMgr:manager.BulletCreatorManager = null;
 		private _curTexture:laya.resource.Texture = null;
 
@@ -65,20 +65,20 @@ module gameobject{
 			}			
 			
 			if(this._isSelf){
-				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.MASTER_PANEL);
+				this._operationID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.MASTER_PANEL);
+				this._bulletMgr = new manager.BulletCreatorManager(this);			
 			}
 			else{
-				this._uID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
-			}
-			// this._bulletMgr = new manager.BulletCreatorManager(this);				
+				this._operationID = manager.OperationManager.Instance.registerOperation(this,OPERATION_TYPE.ENEMY_PANEL);
+			}			
 		}
 
-		public get uID():number{
-			return this._uID;
+		public get operationID():number{
+			return this._operationID;
 		}
 
 		public dispose():void{
-			manager.OperationManager.Instance.unregisterOperation(this._uID);
+			manager.OperationManager.Instance.unregisterOperation(this._operationID);
 			if(this._bulletMgr != null){
 				this._bulletMgr.dispose();
 			}			

@@ -3,7 +3,6 @@
 */
 var manager;
 (function (manager) {
-    /**所有飞机不管自己还是敌人的子弹创建速度都保持一致 */
     var BulletCreatorManager = /** @class */ (function () {
         function BulletCreatorManager(host) {
             this._host = null;

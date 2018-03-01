@@ -26,13 +26,14 @@ var gameobject;
             _this._statusID = -1;
             _this._layerType = LAYER.MAIN;
             _this._varsData = null;
+            _this._uID = -1;
             /**引用计数 */
             _this._refCount = 0;
             _this._isWaitForDispose = false;
             _this.pivot(0, 0);
             return _this;
         }
-        GameObject.prototype.setData = function (kindID, typeID, statusID, isSelf, varsData) {
+        GameObject.prototype.setData = function (uID, kindID, typeID, statusID, isSelf, varsData) {
             if (statusID === void 0) { statusID = 0; }
             if (varsData === void 0) { varsData = null; }
             this._kindID = kindID;
@@ -40,7 +41,15 @@ var gameobject;
             this._statusID = statusID;
             this._isSelf = isSelf;
             this._varsData = varsData;
+            this._uID = uID;
         };
+        Object.defineProperty(GameObject.prototype, "uID", {
+            get: function () {
+                return this._uID;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(GameObject.prototype, "kindID", {
             get: function () {
                 return this._kindID;

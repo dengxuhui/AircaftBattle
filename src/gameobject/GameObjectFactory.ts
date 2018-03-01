@@ -13,6 +13,8 @@ module gameobject {
 		private _objectSecondPool: Dictionary = null;
 		private _curCacheObjNum: number = 0;
 
+		private _orderIndex:number = 0;
+
 		constructor() {
 			super();
 			this._objectFirstPool = new Dictionary();
@@ -35,13 +37,14 @@ module gameobject {
 			if (gameObj == null) {
 				var className: any = this._objClassDic.get(kindID);
 				gameObj = new className();
-				gameObj.setData(kindID,typeID,statusID,isSelf,varsData);	
+				gameObj.setData(this._orderIndex,kindID,typeID,statusID,isSelf,varsData);	
 				gameObj.initialize();			
 			}
 			else {
-				gameObj.setData(kindID,typeID,statusID,isSelf,varsData);
+				gameObj.setData(this._orderIndex,kindID,typeID,statusID,isSelf,varsData);
 				gameObj.initialize();
 			}
+			this._orderIndex ++;
 			return gameObj;
 		}
 

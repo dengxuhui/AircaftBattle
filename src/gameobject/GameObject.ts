@@ -14,6 +14,7 @@ module gameobject{
 		protected _statusID:number = -1;		
 		protected _layerType:number = LAYER.MAIN;		
 		protected _varsData:object = null;
+		protected _uID:number = -1;
 
 		/**引用计数 */
 		private _refCount:number = 0;
@@ -24,12 +25,17 @@ module gameobject{
 			this.pivot(0,0);
 		}
 
-		public setData(kindID:number,typeID:number,statusID:number = 0,isSelf:boolean,varsData:object = null):void{
+		public setData(uID:number,kindID:number,typeID:number,statusID:number = 0,isSelf:boolean,varsData:object = null):void{
 			this._kindID = kindID;
 			this._typeID = typeID;
 			this._statusID = statusID;
 			this._isSelf = isSelf;
 			this._varsData = varsData;
+			this._uID = uID;
+		}
+
+		public get uID():number{
+			return this._uID;
 		}
 
 		public get kindID():number{

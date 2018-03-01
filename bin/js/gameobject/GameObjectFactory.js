@@ -23,6 +23,7 @@ var gameobject;
             /**二级缓存用于缓存经常使用的资源，从资源池拿去先从当前资源池拿取 */
             _this._objectSecondPool = null;
             _this._curCacheObjNum = 0;
+            _this._orderIndex = 0;
             _this._objectFirstPool = new Dictionary();
             _this._objectSecondPool = new Dictionary();
             _this._objClassDic = new Dictionary();
@@ -44,13 +45,14 @@ var gameobject;
             if (gameObj == null) {
                 var className = this._objClassDic.get(kindID);
                 gameObj = new className();
-                gameObj.setData(kindID, typeID, statusID, isSelf, varsData);
+                gameObj.setData(this._orderIndex, kindID, typeID, statusID, isSelf, varsData);
                 gameObj.initialize();
             }
             else {
-                gameObj.setData(kindID, typeID, statusID, isSelf, varsData);
+                gameObj.setData(this._orderIndex, kindID, typeID, statusID, isSelf, varsData);
                 gameObj.initialize();
             }
+            this._orderIndex++;
             return gameObj;
         };
         GameObjectFactory.prototype.disposeObj = function (obj) {
